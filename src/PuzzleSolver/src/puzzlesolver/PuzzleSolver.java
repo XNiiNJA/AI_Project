@@ -5,6 +5,12 @@
  */
 package puzzlesolver;
 
+
+//Initial State
+//   2 8 6
+//   3 5 x
+//   1 4 7
+
 /**
  *
  * @author Grant
@@ -14,8 +20,13 @@ public class PuzzleSolver {
    /**
     * @param args the command line arguments
     */
-   public static void main(String[] args) {
-      // TODO code application logic here
+   public static void main(String[] args) 
+   {
+      
+       
+       
+       
+       
    }
    
 }
