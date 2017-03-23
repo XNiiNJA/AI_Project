@@ -1,0 +1,27 @@
+(1,2,3,4,5,6,7,8,x) -> Goal State
+
+x -> Empty space
+
+Heuristic -> Least possible cost to solve the puzzle. 
+
+(1) x  x
+ x  x  x
+ x  x  1
+
+Distance from 1 to (1) -> sqrt((x1 - x2)^2 + (y1 - y2)^2)
+
+
+Heuristic evaluation pseudocode:
+
+  total-h = 0
+
+  For every obj: 
+
+    obj-pos = Find(obj, current-tuple)
+
+    obj-goal-pos = Find(obj, goal-tuple)
+
+    total-h = distance(obj-pos, obj-goal-pos)
+     
+
+
