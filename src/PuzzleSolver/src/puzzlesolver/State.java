@@ -12,16 +12,17 @@ package puzzlesolver;
 public class State 
 {
     private State nextStates[];
+    
     private int curState [][];
     
-    public State()
+    State(int newState[][])
     {
-        
+        curState = newState;
     }
     
-    public State(int newState[][])
+    public boolean Compare(State toCompare)
     {
-        
+        return curState.equals(toCompare);
     }
     
     public boolean setNext(State next[])
@@ -36,4 +37,18 @@ public class State
     {
         return curState;
     }
+    // Tod - made a simple print state method. Haven't tested it, but it should come in handy when we need to debug, can
+    // make more pretty later
+    public void printCurrentState()
+    {
+        for (int i = 0; i < curState.length; i++)
+        {
+            for(int j = 0; j < curState[i].length; j++)
+            {
+                System.out.print(curState[i][j] + " ");
+            }
+        System.out.print("\n");
+        }
+    }
 }
+
