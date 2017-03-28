@@ -9,6 +9,17 @@ package puzzlesolver;
  *
  * @author kordusj
  */
-public class SearchMethod {
+public class SearchMethod 
+{
+    private State winPath[];
     
+    SearchMethod(){};
+    
+    
+    //Command to execute
+    public void run(){};
+    
+    
+    //prints out the winning path
+    public void Display(){};
 }

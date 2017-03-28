@@ -9,7 +9,7 @@ package puzzlesolver;
  *
  * @author kordusj
  */
-public class BreadthFirst 
+public class BreadthFirst extends SearchMethod 
 {
     private State toProcess[];
     private StateManager manager;
@@ -30,7 +30,6 @@ public class BreadthFirst
     
     public boolean run(StateManager init)
     {
-
         boolean goalReached = false;
         manager = init;
         int oldSize;

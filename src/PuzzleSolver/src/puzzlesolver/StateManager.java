@@ -39,7 +39,7 @@ public class StateManager
     //pos [0] = move empty space down
     //pos [1] = move empty up
     //pos [2] = move empty left
-    //pos [4] = move empty right
+    //pos [3] = move empty right
     //places null in respective slot if state is not valid
     public State[] GetAvailStates(State curState)
     {
