@@ -109,7 +109,7 @@ public class StateManager
     }
     
     //Checks to see if a state has been visited previously
-    private boolean visited(int toCheck[][])
+    public boolean visited(int toCheck[][])
     {
         if(stepsIn == 0)
         {
