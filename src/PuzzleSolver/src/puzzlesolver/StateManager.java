@@ -25,9 +25,9 @@ public class StateManager
         for(int i = 0; i < length; i++ )
             for(int j = 1; j < width; j++)
             {
-                //setGoal[i][i + j] =i + j;  your math is wrong - Tod
-                setGoal[i][j] = (i * width) + j;
+                setGoal[i][j] = (i * width) + j + 1;
             }
+        setGoal[length-1][width-1]=0; //needed to set the puzzle right
         goal = new State(setGoal);
     }
     
