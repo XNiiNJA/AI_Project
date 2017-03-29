@@ -27,7 +27,6 @@ public class State
     {
         curState = newState;
         pSize = newState[0].length;
-        randomizer();
     }
     
     public boolean Compare(State toCompare)
