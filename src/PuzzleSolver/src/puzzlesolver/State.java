@@ -7,17 +7,25 @@ package puzzlesolver;
 
 /**
  *
- * @author kordusj
- */
+ * @author kordusj, jonesto
+ */     
 public class State 
 {
     private State nextStates[];
-    
+    private int pSize;
     private int curState [][];
+    
+    //default constructor - Tod
+    State()
+    {
+        puzzleSize = 3;
+        curState = new int[pSize][pSize];
+    }
     
     State(int newState[][])
     {
         curState = newState;
+        pSize = newState[0].length;
     }
     
     public boolean Compare(State toCompare)
