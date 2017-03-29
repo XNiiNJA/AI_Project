@@ -34,7 +34,7 @@ public class State
     }
     
     //puzzle with inputs for different height and width
-    State (int iHeight, iWidth)
+    State (int iHeight, int iWidth)
     {
         pHeight = iHeight;
         pWidth = iWidth;
