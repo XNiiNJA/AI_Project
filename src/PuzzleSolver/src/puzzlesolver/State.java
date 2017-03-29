@@ -12,27 +12,51 @@ import java.util.Random;
 public class State 
 {
     private State nextStates[];
-    private int pSize;
+    private int pHeight;
+    private int pWidth
     private int curState [][];
     
     //default constructor, uses default size of 3x3 - Tod
     State()
     {
-        pSize = 3;
-        curState = new int[pSize][pSize];
+        pHeight = 3;
+        pWidth = 3;
+        curState = new int[pHeight][pWidth];
         randomizer();
     }
-    //constructor that allows user to input table dimensions-Tod
+    //constructor that allows user to input square table dimensions-Tod
     State (int inputDim)
     {
-        pSize = inputDim
-        curState = new Int[pSize][pSize];
+        pHeight = inputDim;
+        pWidth = inputDim;
+        curState = new Int[pHeight][pWidth];
         randomizer();
     }
+    
+    //puzzle with inputs for different height and width
+    State (int iHeight, iWidth)
+    {
+        pHeight = iHeight;
+        pWidth = iWidth;
+        curState = new Int[pHeight][pWidth];
+        randomizer();
+    }
+    //returns height
+    int GetHeight()
+    {
+        return pHeight;
+    }
+    //returns width
+    int GetWidth()
+    {
+        return pWidth;
+    }
+    
     State(int newState[][])
     {
         curState = newState;
-        pSize = newState[0].length;
+        pWidth = newState[0].length;
+        pHeight = newState.length;
     }
     
     public boolean Compare(State toCompare)
@@ -70,16 +94,16 @@ public class State
     // in array
     public void randomizer()
     {
-        for (int i = 0; i < pSize; i++)
-            for (int j = 0; j < pSize; j++)
-                curState[i][j] = (i * pSize) + j;
+        for (int i = 0; i < pHeight; i++)
+            for (int j = 0; j < pWidth; j++)
+                curState[i][j] = (i * pHeight) + j;
         
         int temp, rand1, rand2 = 0;
-        for (int i = 0; i < pSize; i++)
-            for (int j = 0; j < pSize; j++)
+        for (int i = 0; i < pHeight; i++)
+            for (int j = 0; j < pWidth; j++)
             {
-                rand1 = (int)(Math.random() * pSize);
-                rand2 = (int)(Math.random() * pSize);
+                rand1 = (int)(Math.random() * pHeight);
+                rand2 = (int)(Math.random() * pWidth);
                 temp = curState[i][j];
                 curState[i][j] = curState[rand1][rand2];
                 curState[rand1][rand2] = temp;
