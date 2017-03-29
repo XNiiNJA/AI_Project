@@ -15,14 +15,20 @@ public class State
     private int pSize;
     private int curState [][];
     
-    //default constructor - Tod
+    //default constructor, uses default size of 3x3 - Tod
     State()
     {
         pSize = 3;
         curState = new int[pSize][pSize];
         randomizer();
     }
-    
+    //constructor that allows user to input table dimensions-Tod
+    State (int inputDim)
+    {
+        pSize = inputDim
+        curState = new Int[pSize][pSize];
+        randomizer();
+    }
     State(int newState[][])
     {
         curState = newState;
