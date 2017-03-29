@@ -26,7 +26,7 @@ public class StateManager
             for(int j = 1; j < width; j++)
             {
                 //setGoal[i][i + j] =i + j;  your math is wrong - Tod
-                setGoal[i][(i * length) + j] = (i * length) + j;
+                setGoal[i][(i * width) + j] = (i * width) + j;
             }
         goal = new State(setGoal);
     }
