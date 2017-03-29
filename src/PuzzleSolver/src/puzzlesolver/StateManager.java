@@ -54,7 +54,7 @@ public class StateManager
                     posY = i;
                 }  
         State availStates[] = new State[4];
-        if(tall < posY + 1)
+        if(tall > posY + 1)
         {
             int temp[][] = goal.getState();
             int holder = temp[posY][posX];
@@ -67,7 +67,7 @@ public class StateManager
         } 
         else
             availStates[0] = null;
-        if(0 < posY - 1)
+        if(0 <= posY - 1)
         {
             int temp[][] = goal.getState();
             int holder = temp[posY][posX];
@@ -80,7 +80,7 @@ public class StateManager
         }
         else
             availStates[1] = null;  
-        if(0 < posX - 1)
+        if(0 <= posX - 1)
         {
             int temp[][] = goal.getState();
             int holder = temp[posY][posX];
@@ -93,7 +93,7 @@ public class StateManager
         }
         else
             availStates[2] = null;
-        if(0 < posX + 1)
+        if(across > posX + 1)
         {
             int temp[][] = goal.getState();
             int holder = temp[posY][posX];
