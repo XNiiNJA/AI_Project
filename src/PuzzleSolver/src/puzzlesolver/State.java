@@ -74,7 +74,7 @@ public class State
     
     public int[][] getState()
     {
-        return curState;
+        return curState;c
     }
     // Tod - made a simple print state method. Haven't tested it, but it should come in handy when we need to debug, can
     // make more pretty later
@@ -89,6 +89,29 @@ public class State
         System.out.print("\n");
         }
     }
+    /**
+   overriden equals method for State class
+   @param obj being compared, in this case State objects
+   @return true if all items are equal - Tod
+   */
+
+   public boolean equals(Object obj)
+   {
+      if (obj instanceof State)
+      {
+         State comp = (State) obj;
+         for(int i = 0; i < pHeight; i++)
+             for(int j = 0; j < pWidth; j++)  
+                 if (comp.curState[i][j] != curState[i][j])
+                     return false;
+          return true;             
+      }
+      return false;
+   }
+  
+
+    
+    
     
     //Tod - Randomize sets each number sequentially and swaps out 
     // in array
