@@ -18,7 +18,7 @@ public class State
     //default constructor - Tod
     State()
     {
-        puzzleSize = 3;
+        pSize = 3;
         curState = new int[pSize][pSize];
     }
     
