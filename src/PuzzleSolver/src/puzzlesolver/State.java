@@ -13,7 +13,7 @@ public class State
 {
     private State nextStates[];
     private int pHeight;
-    private int pWidth
+    private int pWidth;
     private int curState [][];
     
     //default constructor, uses default size of 3x3 - Tod
@@ -29,7 +29,7 @@ public class State
     {
         pHeight = inputDim;
         pWidth = inputDim;
-        curState = new Int[pHeight][pWidth];
+        curState = new int[pHeight][pWidth];
         randomizer();
     }
     
@@ -38,7 +38,7 @@ public class State
     {
         pHeight = iHeight;
         pWidth = iWidth;
-        curState = new Int[pHeight][pWidth];
+        curState = new int[pHeight][pWidth];
         randomizer();
     }
     //returns height
@@ -74,7 +74,7 @@ public class State
     
     public int[][] getState()
     {
-        return curState;c
+        return curState;
     }
     // Tod - made a simple print state method. Haven't tested it, but it should come in handy when we need to debug, can
     // make more pretty later
