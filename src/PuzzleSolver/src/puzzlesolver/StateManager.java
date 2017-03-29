@@ -48,9 +48,9 @@ public class StateManager
         int posX = 0, posY = 0;
         for(int i = 0; i < tall; i++ )
             for(int j = 1; j < across; j++)
-                if(state[i][i + j] == 0)
+                if(state[i][j] == 0)
                 {
-                    posX = i + j;
+                    posX = j;
                     posY = i;
                 }  
         State availStates[] = new State[4];
