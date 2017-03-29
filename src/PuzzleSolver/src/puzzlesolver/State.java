@@ -119,7 +119,7 @@ public class State
     {
         for (int i = 0; i < pHeight; i++)
             for (int j = 0; j < pWidth; j++)
-                curState[i][j] = (i * pHeight) + j;
+                curState[i][j] = (i * pWidth) + j;
         
         int temp, rand1, rand2 = 0;
         for (int i = 0; i < pHeight; i++)
