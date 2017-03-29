@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package puzzlesolver;
-
+import java.util.Random;
 /**
  *
  * @author kordusj, jonesto
@@ -20,12 +20,14 @@ public class State
     {
         pSize = 3;
         curState = new int[pSize][pSize];
+        randomizer();
     }
     
     State(int newState[][])
     {
         curState = newState;
         pSize = newState[0].length;
+        randomizer();
     }
     
     public boolean Compare(State toCompare)
@@ -58,5 +60,26 @@ public class State
         System.out.print("\n");
         }
     }
+    
+    //Tod - Randomize sets each number sequentially and swaps out 
+    // in array
+    public void randomizer()
+    {
+        for (int i = 0; i < pSize; i++)
+            for (int j = 0; j < pSize; j++)
+                curState[i][j] = (i * pSize) + j;
+        
+        int temp, rand1, rand2 = 0;
+        for (int i = 0; i < pSize; i++)
+            for (int j = 0; j < pSize; j++)
+            {
+                rand1 = (int)(Math.random() * pSize);
+                rand2 = (int)(Math.random() * pSize);
+                temp = curState[i][j];
+                curState[i][j] = curState[rand1][rand2];
+                curState[rand1][rand2] = temp;
+            }
+    }
+
 }
 
