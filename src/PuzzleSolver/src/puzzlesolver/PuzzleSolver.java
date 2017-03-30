@@ -17,12 +17,16 @@ import java.io.InputStreamReader;
  *
  * @author Grant
  */
-public class PuzzleSolver {
+public class PuzzleSolver 
+{
+    private static BreadthFirst breadth;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
+        breadth = new BreadthFirst();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welcome to this program");
         System.out.println("Pardon the Dust, we are still working on it");
@@ -41,6 +45,8 @@ public class PuzzleSolver {
         start[2][2] = 7;
         //=================
         State init = new State(start);
+        StateManager manage = new StateManager(init);
+        manage.goalState(3, 3);
         String input = "";
         while (!input.equals("Exit")) {
 
@@ -55,7 +61,7 @@ public class PuzzleSolver {
                 input = in.readLine();
                 switch (input) {
                     case "Breadth":
-                        //your frunction call here
+                        breadth.run(manage);
                         break;
                     case "A*":
                         //your function call here

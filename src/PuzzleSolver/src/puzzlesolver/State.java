@@ -4,59 +4,28 @@
  * and open the template in the editor.
  */
 package puzzlesolver;
-import java.util.Random;
+
+import java.util.Arrays;
+
 /**
  *
- * @author kordusj, jonesto
- */     
+ * @author kordusj
+ */
 public class State 
 {
     private State nextStates[];
-    private int pHeight;
-    private int pWidth;
+    
+    private State previous;
+    
     private int curState [][];
     
-    //default constructor, uses default size of 3x3 - Tod
-    State()
-    {
-        pHeight = 3;
-        pWidth = 3;
-        curState = new int[pHeight][pWidth];
-        randomizer();
-    }
-    //constructor that allows user to input square table dimensions-Tod
-    State (int inputDim)
-    {
-        pHeight = inputDim;
-        pWidth = inputDim;
-        curState = new int[pHeight][pWidth];
-        randomizer();
-    }
-    
-    //puzzle with inputs for different height and width
-    State (int iHeight, int iWidth)
-    {
-        pHeight = iHeight;
-        pWidth = iWidth;
-        curState = new int[pHeight][pWidth];
-        randomizer();
-    }
-    //returns height
-    int GetHeight()
-    {
-        return pHeight;
-    }
-    //returns width
-    int GetWidth()
-    {
-        return pWidth;
-    }
+    private float gScore = Float.MAX_VALUE;
+    private float fScore = Float.MAX_VALUE;
+    private float hScore;
     
     State(int newState[][])
     {
         curState = newState;
-        pWidth = newState[0].length;
-        pHeight = newState.length;
     }
     
     public boolean Compare(State toCompare)
@@ -72,10 +41,86 @@ public class State
         return true;
     }
     
+    public boolean setPrevious(State state)
+    {
+       if(state != null)
+          previous = state;
+         
+       return state != null;
+    }
+    
+    public State getPrevious()
+    {
+       return previous;
+    }
+    
     public int[][] getState()
     {
         return curState;
     }
+
+    public void setGScore(float g)
+    {
+       gScore = g;
+    }
+    
+    public void setFScore(float f)
+    {
+       fScore = f;
+    }
+    
+    public void setHScore(float h)
+    {
+       hScore = h;
+    }
+    
+    public float getGScore()
+    {
+       return gScore;
+    }
+    
+    public float getFScore()
+    {
+       return fScore;
+    }
+    
+    public float getHScore()
+    {
+       return hScore;
+    }
+    
+   @Override
+   public int hashCode() {
+      int hash = 7;
+      hash = 61 * hash + Arrays.deepHashCode(this.curState);
+      return hash;
+   }
+    
+    @Override
+    public boolean equals(Object o)
+    {
+       
+       if(o instanceof State)
+       {
+          State s = (State)o;
+          
+          int[][] raw = s.getState();
+          
+          for(int i = 0; i < raw.length; i++)
+          {
+             for(int j = 0; j < raw[i].length; j++)
+                if(raw[i][j] != curState[i][j])
+                  return false;
+          }
+          
+          return true;
+       }
+       
+       return false;
+       
+    }
+    
+    
     // Tod - made a simple print state method. Haven't tested it, but it should come in handy when we need to debug, can
     // make more pretty later
     public void printCurrentState()
@@ -89,49 +134,6 @@ public class State
         System.out.print("\n");
         }
     }
-    /**
-   overriden equals method for State class
-   @param obj being compared, in this case State objects
-   @return true if all items are equal - Tod
-   */
-
-   public boolean equals(Object obj)
-   {
-      if (obj instanceof State)
-      {
-         State comp = (State) obj;
-         for(int i = 0; i < pHeight; i++)
-             for(int j = 0; j < pWidth; j++)  
-                 if (comp.curState[i][j] != curState[i][j])
-                     return false;
-          return true;             
-      }
-      return false;
-   }
-  
-
-    
-    
-    
-    //Tod - Randomize sets each number sequentially and swaps out 
-    // in array
-    public void randomizer()
-    {
-        for (int i = 0; i < pHeight; i++)
-            for (int j = 0; j < pWidth; j++)
-                curState[i][j] = (i * pWidth) + j;
-        
-        int temp, rand1, rand2 = 0;
-        for (int i = 0; i < pHeight; i++)
-            for (int j = 0; j < pWidth; j++)
-            {
-                rand1 = (int)(Math.random() * pHeight);
-                rand2 = (int)(Math.random() * pWidth);
-                temp = curState[i][j];
-                curState[i][j] = curState[rand1][rand2];
-                curState[rand1][rand2] = temp;
-            }
-    }
-
 }
+
 
