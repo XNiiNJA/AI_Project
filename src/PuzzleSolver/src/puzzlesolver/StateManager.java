@@ -15,6 +15,7 @@ import java.util.Iterator;
  */
 public class StateManager {
 
+
     private State goal;
     private HashSet closedSet = new HashSet(); //Evaluated Nodes
     private HashSet openSet = new HashSet();   //Discovered but not evaluated nodes
