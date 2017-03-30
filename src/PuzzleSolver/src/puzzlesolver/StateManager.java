@@ -15,381 +15,269 @@ import java.util.Iterator;
  */
 public class StateManager {
 
-   private State goal;
-   private State passedStates[];
-   private HashSet closedSet = new HashSet(); //Evaluated Nodes
-   private HashSet openSet = new HashSet();   //Discovered but not evaluated nodes
-   private int across;
-   private int tall;
-   private int stepsIn;
 
-   public void goalState(int width, int length) {
-      tall = length;
-      across = width;
-      int setGoal[][] = new int[width][length];
-      for (int i = 0; i < length; i++) {
-         for (int j = 0; j < width; j++) {
-            setGoal[i][j] = width * i + j;
-         }
-      }
+    private State goal;
+    private HashSet closedSet = new HashSet(); //Evaluated Nodes
+    private HashSet openSet = new HashSet();   //Discovered but not evaluated nodes
+    private int across;
+    private int tall;
+    private State start;
 
-      goal = new State(setGoal);
-   }
+    StateManager(State init) {
+        start = init;
+    }
+    
+    public State getStart()
+    {
+        return start;
+    }
 
-   public boolean FoundGoal(State curState) {
-      return curState.equals(goal);
-   }
-
-   //returns all availble states in an array
-   //pos [0] = move empty space down
-   //pos [1] = move empty up
-   //pos [2] = move empty left
-   //pos [3] = move empty right
-   //places null in respective slot if state is not valid
-   public State[] GetAvailStates(State curState) {
-      int state[][] = curState.getState();
-      int posX = 0, posY = 0;
-      for (int i = 0; i < tall; i++) {
-         for (int j = 1; j < across; j++) {
-            if (state[i][j] == 0) {
-               posX = i;
-               posY = j;
+    public void goalState(int width, int length) {
+        tall = length;
+        across = width;
+        int setGoal[][] = new int[width][length];
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                setGoal[i][j] = width * i + j;
             }
-         }
-      }
-      State availStates[] = new State[4];
-      if (tall < posY + 1) {
-         int temp[][] = goal.getState();
-         int holder = temp[posY][posX];
-         temp[posY][posX] = temp[posY + 1][posX];
-         temp[posY + 1][posX] = holder;
-         if (!visited(temp)) {
-            availStates[0] = new State(temp);
-         } else {
-            availStates[0] = null;
-         }
-      } else {
-         availStates[0] = null;
-      }
-      if (0 < posY - 1) {
-         int temp[][] = goal.getState();
-         int holder = temp[posY][posX];
-         temp[posY][posX] = temp[posY - 1][posX];
-         temp[posY - 1][posX] = holder;
-         if (!visited(temp)) {
-            availStates[1] = new State(temp);
-         } else {
-            availStates[1] = null;
-         }
-      } else {
-         availStates[1] = null;
-      }
-      if (0 < posX - 1) {
-         int temp[][] = goal.getState();
-         int holder = temp[posY][posX];
-         temp[posY][posX] = temp[posY][posX - 1];
-         temp[posY][posX - 1] = holder;
-         if (!visited(temp)) {
-            availStates[2] = new State(temp);
-         } else {
-            availStates[2] = null;
-         }
-      } else {
-         availStates[2] = null;
-      }
-      if (0 < posX + 1) {
-         int temp[][] = goal.getState();
-         int holder = temp[posY][posX];
-         temp[posY][posX] = temp[posY][posX + 1];
-         temp[posY][posX + 1] = holder;
-         if (!visited(temp)) {
-            availStates[3] = new State(temp);
-         } else {
-            availStates[3] = null;
-         }
-      } else {
-         availStates[3] = null;
-      }
-      return availStates;
-   }
+        }
 
-   public State[] GetNextStates(State curState) {
+        goal = new State(setGoal);
+    }
 
-      ArrayList<State> a = new ArrayList<>();
+    public boolean FoundGoal(State curState) 
+    {
+        return curState.equals(goal);
+    }
 
-      int[][] raw = curState.getState();
+    //returns all availble states in an array
+    //pos [0] = move empty space down
+    //pos [1] = move empty up
+    //pos [2] = move empty left
+    //pos [3] = move empty right
+    //places null in respective slot if state is not valid
+    public State[] GetNextStates(State curState) {
+        ArrayList<State> a = new ArrayList<>();
+        int[][] raw = curState.getState();
+        //Find the coordinates of the empty spot (0)
+        Point p = findPoint(0, curState);
+        State temp;
+        if (across > p.x + 1) {
+            //We can move right
+            Point right = new Point(p.x + 1, p.y);
+            temp = swapPoints(curState, p, right);
+            if (isInOpenSet(temp)) {
+                temp = getStateInSet(temp);
+            }
+            a.add(temp);
+        }
+        if (p.x > 0) {
+            //We can move left
+            Point right = new Point(p.x - 1, p.y);
+            temp = swapPoints(curState, p, right);
+            if (isInOpenSet(temp)) {
+                temp = getStateInSet(temp);
+            }
+            a.add(temp);
+        }
+        if (tall > p.y + 1) {
+            //We can move up.
+            Point right = new Point(p.x, p.y + 1);
+            temp = swapPoints(curState, p, right);
+            if (isInOpenSet(temp)) {
+                temp = getStateInSet(temp);
+            }
+            a.add(temp);
+        }
+        if (p.y > 0) {
+            //We can move down.
+            Point right = new Point(p.x, p.y - 1);
+            temp = swapPoints(curState, p, right);
+            if (isInOpenSet(temp)) {
+                temp = getStateInSet(temp);
+            }
+            a.add(temp);
+        }
+        return a.toArray(new State[a.size()]);
+    }
 
-      //Find the coordinates of the empty spot (0)
-      Point p = findPoint(0, curState);
 
-      State temp;
 
-      if (across > p.x + 1) {
-         //We can move right
+    public boolean addToClosedSet(State state) {
 
-         Point right = new Point(p.x + 1, p.y);
+        boolean result = closedSet.add(state);
 
-         temp = swapPoints(curState, p, right);
+        if (closedSet.size() % 10000 == 0) {
+            System.out.println("ratio: " + (float) openSet.size() / closedSet.size());
+        }
+        return result;
 
-         if(isInOpenSet(temp))
-            temp = getStateInSet(temp);
-         
-         a.add(temp);
-      }
+        ///return closedSet.add(state);
+    }
 
-      if (p.x > 0) {
+    public boolean addToOpenSet(State state) {
+        boolean result = openSet.add(state);
+        if (openSet.size() % 1000 == 0) {
+            //     System.out.println("in open set: " + openSet.size());
+        }
+        return result;
+    }
 
-         //We can move left
-         Point right = new Point(p.x - 1, p.y);
+    public boolean removeFromOpenSet(State state) {
+        boolean result = openSet.remove(state);
+        if (openSet.size() % 1000 == 0) {
+            //   System.out.println("in open set: " + openSet.size());
+        }
+        return result;
 
-         temp = swapPoints(curState, p, right);
+    }
 
-         if(isInOpenSet(temp))
-            temp = getStateInSet(temp);
-         
-         
-         a.add(temp);
-      }
+    public boolean isInClosedSet(State state) {
+        return closedSet.contains(state);
+    }
 
-      if (tall > p.y + 1) {
-         //We can move up.
+    public boolean isInOpenSet(State state) {
+        return openSet.contains(state);
+    }
 
-         Point right = new Point(p.x, p.y + 1);
-
-         temp = swapPoints(curState, p, right);
-
-         if(isInOpenSet(temp))
-            temp = getStateInSet(temp);
-         
-         
-         a.add(temp);
-
-      }
-
-      if (p.y > 0) {
-         //We can move down.
-
-         Point right = new Point(p.x, p.y - 1);
-
-         temp = swapPoints(curState, p, right);
-
-         if(isInOpenSet(temp))
-            temp = getStateInSet(temp);
-         
-         
-         a.add(temp);
-
-      }
-
-      return a.toArray(new State[a.size()]);
-
-   }
-
-   //Checks to see if a state has been visited previously
-   public boolean visited(int toCheck[][]) {
-      if (stepsIn == 0) {
-         State tempStates[];
-         tempStates = passedStates;
-         passedStates = new State[stepsIn + 1];
-         State temp = new State(toCheck);
-         for (int i = 0; i < stepsIn; i++) {
-            if (temp.Compare(passedStates[i]));
+    public boolean updateOpenStateInstance(State state) {
+        if (openSet.contains(state)) {
+            openSet.remove(state);
+            openSet.add(state);
             return true;
-         }
-      }
-      return false;
-   }
+        } else {
+            openSet.add(state);
+        }
 
-   public boolean addToClosedSet(State state) {
+        return false;
+    }
 
-      boolean result = closedSet.add(state);
-      
-      
-      if (closedSet.size() % 10000 == 0) {
-         System.out.println("ratio: " + (float)openSet.size() / closedSet.size());
-      }
-      return result;
-      
-      ///return closedSet.add(state);
+    public State getStateInSet(State state) {
+        Iterator<State> it = openSet.iterator();
 
-   }
+        while (it.hasNext()) {
+            State s = it.next();
+            if (s.equals(state)) {
+                return s;
+            }
+        }
+        return null;
+    }
 
-   public boolean addToOpenSet(State state) {
-      boolean result = openSet.add(state);
-      if (openSet.size() % 1000 == 0) {
-    //     System.out.println("in open set: " + openSet.size());
-      }
-      return result;
-   }
+    public boolean openSetEmpty() {
+        return openSet.isEmpty();
+    }
 
-   public boolean removeFromOpenSet(State state) {
-      boolean result = openSet.remove(state);
-      if (openSet.size() % 1000 == 0) {
-      //   System.out.println("in open set: " + openSet.size());
-      }
-      return result;
+    public State findLowestF() {
+        Iterator<State> it = openSet.iterator();
 
-   }
+        State lowest = null;
 
-   public boolean isInClosedSet(State state) {
-      return closedSet.contains(state);
-   }
+        while (it.hasNext()) {
+            State s = it.next();
 
-   public boolean isInOpenSet(State state) {
-      return openSet.contains(state);
-   }
-
-   public boolean updateOpenStateInstance(State state)
-   {
-      if(openSet.contains(state))
-      {
-         openSet.remove(state);
-         openSet.add(state);
-         return true;
-      }
-      else
-         openSet.add(state);
-      
-      return false;
-   }
-   
-   public State getStateInSet(State state)
-   {
-      Iterator<State> it = openSet.iterator();
-
-      while (it.hasNext()) {
-         State s = it.next();
-         if(s.equals(state))
-         {
-            return s;
-         }
-      }
-      return null;
-   }
-   
-   public boolean openSetEmpty() {
-      return openSet.isEmpty();
-   }
-
-   public State findLowestF() {
-      Iterator<State> it = openSet.iterator();
-
-      State lowest = null;
-
-      while (it.hasNext()) {
-         State s = it.next();
-
-         if (lowest == null) {
-            lowest = s;
-         } else if (lowest.getFScore() > s.getFScore()) {
-            lowest = s;
-         }
-
-      }
-
-      return lowest;
-
-   }
-
-   //progresses the state forward one and stores the previous state on a
-   //stack
-   public boolean stepInto(State next, State curState) {
-      if (!(visited(next.getState()))) {
-         passedStates[stepsIn++] = curState;
-         curState = next;
-         return true;
-      }
-      return false;
-   }
-
-   public float getHeuristic(State state) {
-
-      int[][] rawState = state.getState();
-
-      float totalDist = 0;
-
-      for (int i = 0; i < rawState.length; i++) {
-
-         for (int j = 0; j < rawState[i].length; j++) {
-
-            Point goalPoint = findPoint(rawState[i][j], goal);
-            Point thisPoint = new Point(i, j);
-
-            if (thisPoint != null && goalPoint != null) {
-               totalDist += Utils.distance(goalPoint, thisPoint);
+            if (lowest == null) {
+                lowest = s;
+            } else if (lowest.getFScore() > s.getFScore()) {
+                lowest = s;
             }
 
-         }
+        }
 
-      }
+        return lowest;
 
-      return totalDist;
-      //return 0;
-   }
+    }
 
-   private State swapPoints(State state, Point a, Point b) {
 
-      int[][] newRaw = new int[across][tall];
 
-      for (int i = 0; i < tall; i++) {
-         for (int j = 0; j < across; j++) {
-            newRaw[i][j] = state.getState()[i][j];
-         }
-      }
+    public float getHeuristic(State state) {
 
-      State newState = new State(newRaw);
+        int[][] rawState = state.getState();
 
-      int temp = newState.getState()[a.x][a.y];
+        float totalDist = 0;
 
-      newState.getState()[a.x][a.y] = newState.getState()[b.x][b.y];
+        for (int i = 0; i < rawState.length; i++) {
 
-      newState.getState()[b.x][b.y] = temp;
+            for (int j = 0; j < rawState[i].length; j++) {
 
-      return newState;
+                Point goalPoint = findPoint(rawState[i][j], goal);
+                Point thisPoint = new Point(i, j);
 
-   }
+                if (thisPoint != null && goalPoint != null) {
+                    totalDist += Utils.distance(goalPoint, thisPoint);
+                }
 
-   private Point findPoint(int x, State state) {
-
-      for (int i = 0; i < state.getState().length; i++) {
-         for (int j = 0; j < state.getState()[i].length; j++) {
-            if (state.getState()[i][j] == x) {
-               return new Point(i, j);
             }
-         }
 
-      }
+        }
 
-      return null;
+        return totalDist;
+        //return 0;
+    }
 
-   }
+    private State swapPoints(State state, Point a, Point b) {
 
-   //Needs: 
-   //Heuristic Getter
-   public static void main(String args[]) {
+        int[][] newRaw = new int[across][tall];
 
-      int[][] raw;
-      raw = new int[][]{{4, 1, 3},
-      {2, 5, -1},
-      {7, 6, 8}};
+        for (int i = 0; i < tall; i++) {
+            for (int j = 0; j < across; j++) {
+                newRaw[i][j] = state.getState()[i][j];
+            }
+        }
 
-      int[][] rawGoal;
-      rawGoal = new int[][]{{0, 3, 6},
-      {1, 4, 7},
-      {2, 5, 8}};
+        State newState = new State(newRaw);
 
-      State testState = new State(raw);
+        int temp = newState.getState()[a.x][a.y];
 
-      StateManager sm = new StateManager();
+        newState.getState()[a.x][a.y] = newState.getState()[b.x][b.y];
 
-      sm.goalState(3, 3);
+        newState.getState()[b.x][b.y] = temp;
 
-      sm.goal.printCurrentState();
+        return newState;
 
-      System.out.println(sm.goal.equals(new State(rawGoal)));
+    }
 
-      System.out.println(sm.getHeuristic(testState));
+    private Point findPoint(int x, State state) {
 
-   }
+        for (int i = 0; i < state.getState().length; i++) {
+            for (int j = 0; j < state.getState()[i].length; j++) {
+                if (state.getState()[i][j] == x) {
+                    return new Point(i, j);
+                }
+            }
+
+        }
+
+        return null;
+
+    }
+
+    //Needs: 
+    //Heuristic Getter
+    public static void main(String args[]) {
+
+        int[][] raw;
+        raw = new int[][]{{4, 1, 3},
+        {2, 5, -1},
+        {7, 6, 8}};
+
+        int[][] rawGoal;
+        rawGoal = new int[][]{{0, 3, 6},
+        {1, 4, 7},
+        {2, 5, 8}};
+
+        State testState = new State(raw);
+
+        StateManager sm = new StateManager(testState);
+
+        sm.goalState(3, 3);
+
+        sm.goal.printCurrentState();
+
+        System.out.println(sm.goal.equals(new State(rawGoal)));
+
+        System.out.println(sm.getHeuristic(testState));
+
+    }
 
 }
