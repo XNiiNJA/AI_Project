@@ -135,3 +135,42 @@ public class State
 
 }
 
+//shuffle method, should always produce solvable puzzle
+    public void shuffler(int shufflenum)
+    {
+        public enum direction {NORTH, EAST, WEST, SOUTH};
+        for (int i = 0; i < pHeight; i++)
+            for (int j = 0; j < pWidth; j++)
+                curState[i][j] = (i * pWidth) + j + 1;
+        curState[pHeight-1][pWidth-1]=0;
+        posx = pWidth - 1;
+        posy = pHeight - 1;
+        for (int i = 0; i < shufflenum; i++)
+        {
+            int randir = (int)(Math.random() * 4);
+            if(randir == NORTH && posy > 0)
+            {
+                curState[posx][posy] = curState[posx][posy-1];
+                curState[posx][posy-1]=0;
+            }
+            else if(randir == EAST && posx < (pWidth-1))
+            {
+                curState[posx][posy] = curState[posx+1][posy];
+                curState[posx+1][posy]=0;
+            }
+            else if(randir == WEST && posx > 0))
+            {
+                curState[posx][posy] = curState[posx-1][posy];
+                curState[posx-1][posy] = 0;
+            }
+            else if(randir == SOUTH && posy < (pHeight-1))
+            {
+                curState[posx][posy] = curState[posx][posy+1];
+                curState[posx][posy]=0;
+            }
+                
+                
+            
+        }
+    
+    }
