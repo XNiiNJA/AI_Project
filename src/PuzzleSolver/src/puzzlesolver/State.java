@@ -136,7 +136,7 @@ public class State
 
 
 //shuffle method, should always produce solvable puzzle
-    public void Shuffler(int shufflenum)
+  public void Shuffler(int shufflenum)
     {
         int NORTH = 0;
         int EAST = 1;
@@ -156,25 +156,26 @@ public class State
             {
                 curState[posy][posx] = curState[posy-1][posx];
                 curState[posy-1][posx]=0;
+                posy--;
             }
             else if(randir == EAST && posx < (pWidth-1))
             {
                 curState[posy][posx] = curState[posy][posx+1];
                 curState[posy][posx+1]=0;
+                posx++;
             }
             else if(randir == WEST && posx > 0)
             {
                 curState[posy][posx] = curState[posy][posx-1];
-                curState[posy][posx] = 0;
+                curState[posy][posx-1] = 0;
+                posx--;
             }
             else if(randir == SOUTH && posy < (pHeight-1))
             {
                 curState[posy][posx] = curState[posy+1][posx];
                 curState[posy+1][posx]=0;
+                posy++;
             }
-                
-                
-            
         }
     }
 }
