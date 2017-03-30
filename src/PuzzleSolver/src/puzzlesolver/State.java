@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package puzzlesolver;
+//package puzzlesolver;
 import java.util.Random;
 /**
  *
@@ -133,18 +133,22 @@ public class State
             }
     }
 
-}
+
 
 //shuffle method, should always produce solvable puzzle
-    public void shuffler(int shufflenum)
+    public void Shuffler(int shufflenum)
     {
-        public enum direction {NORTH, EAST, WEST, SOUTH};
+        int NORTH = 0;
+        int EAST = 1;
+        int WEST = 2;
+        int SOUTH = 3;
+        
         for (int i = 0; i < pHeight; i++)
             for (int j = 0; j < pWidth; j++)
                 curState[i][j] = (i * pWidth) + j + 1;
         curState[pHeight-1][pWidth-1]=0;
-        posx = pWidth - 1;
-        posy = pHeight - 1;
+        int posx = pWidth - 1;
+        int posy = pHeight - 1;
         for (int i = 0; i < shufflenum; i++)
         {
             int randir = (int)(Math.random() * 4);
@@ -158,7 +162,7 @@ public class State
                 curState[posx][posy] = curState[posx+1][posy];
                 curState[posx+1][posy]=0;
             }
-            else if(randir == WEST && posx > 0))
+            else if(randir == WEST && posx > 0)
             {
                 curState[posx][posy] = curState[posx-1][posy];
                 curState[posx-1][posy] = 0;
@@ -172,5 +176,5 @@ public class State
                 
             
         }
-    
     }
+}
