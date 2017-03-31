@@ -11,5 +11,10 @@ package puzzlesolver;
  */
 public class BeamSearch extends SearchMethod
 {
+
+   @Override
+   public boolean run(StateManager st) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
     
 }

@@ -33,6 +33,7 @@ public class BreadthFirst extends SearchMethod {
         toProcess = Arrays.copyOf(temp, size);
     }
 
+    @Override
     public boolean run(StateManager init) {
         boolean goalReached = false;
         manager = init;

@@ -22,11 +22,10 @@ public class AStarSearch extends SearchMethod{
       
    }
    
-   public void run()
+   public boolean run(StateManager st)
    {
-      
-      st = new StateManager(); 
-      int[][] raw;
+       
+      /*int[][] raw;
       //raw = new int[][]{{2, 3, 0},
       //                  {1, 6, 8},
       //                  {7, 5, 4}};
@@ -38,11 +37,14 @@ public class AStarSearch extends SearchMethod{
       float lowestH = Float.MAX_VALUE;
       
       
-      //First, generate a goal state to run on.
-      st.goalState(3, 3);
-      
-      
       State start = new State(raw);
+      
+      st = new StateManager(start);
+      
+      //First, generate a goal state to run on.
+      st.goalState(3, 3);*/
+      
+      State start = st.getStart();
       
       //Set the G score of the start to 0.
       start.setGScore(0);
@@ -62,7 +64,7 @@ public class AStarSearch extends SearchMethod{
          {
             System.out.println("Found!");
             display(current);
-            return;
+            return true;
          }
          
          st.removeFromOpenSet(current);
@@ -97,16 +99,16 @@ public class AStarSearch extends SearchMethod{
 
             st.updateOpenStateInstance(neighbor);
             
-            if(neighbor.getHScore() < lowestH)
+/*            if(neighbor.getHScore() < lowestH)
             {
                
                neighbor.printCurrentState();
                
-               lowestH = neighbor.getHScore();
+               //lowestH = neighbor.getHScore();
                
-               System.out.println("\n" + lowestH);
+               //System.out.println("\n" + lowestH);
                
-            }
+            }*/
             
             
          }
@@ -117,10 +119,10 @@ public class AStarSearch extends SearchMethod{
       System.out.println("Failure!");
       display(current);
       
-      return ;
+      return false;
    }
    
-   private State getNextBest(State state)
+/*   private State getNextBest(State state)
    {
       State[] states = st.GetAvailStates(state);
       
@@ -135,7 +137,7 @@ public class AStarSearch extends SearchMethod{
       return states[lowestIndex];
       
    }
-   
+*/   
    public void display(State path)
    {
       
@@ -158,7 +160,7 @@ public class AStarSearch extends SearchMethod{
    public static void main(String args[])
    {
       
-      new AStarSearch().run();
+     // new AStarSearch().run(new StateManager());
       
       
       

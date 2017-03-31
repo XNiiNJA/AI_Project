@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 public class PuzzleSolver 
 {
     private static BreadthFirst breadth;
+    private static AStarSearch  astar;
 
     /**
      * @param args the command line arguments
@@ -27,6 +28,7 @@ public class PuzzleSolver
     public static void main(String[] args) 
     {
         breadth = new BreadthFirst();
+        astar = new AStarSearch();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welcome to this program");
         System.out.println("Pardon the Dust, we are still working on it");
@@ -59,11 +61,22 @@ public class PuzzleSolver
             System.out.println("Enter: Breadth | A* | Beam | Exit ");
             try {
                 input = in.readLine();
+                
+                
+                if(input.equals("Breadth"))
+                   breadth.run(manage);
+                else if(input.equals("A*"))
+                   astar.run(manage);
+                else if(input.equals("Beam"))
+                   continue;
+                
+                /*
                 switch (input) {
                     case "Breadth":
                         breadth.run(manage);
                         break;
                     case "A*":
+                        
                         //your function call here
                         break;
                     case "Beam":
@@ -71,7 +84,7 @@ public class PuzzleSolver
                         break;
                     default:
                         System.out.println("Not an option.");
-                }
+                }*/
             } catch (IOException ex) {
 
             }

@@ -7,5 +7,10 @@ package puzzlesolver;
 
 public class DepthFirst extends SearchMethod
 {
+
+   @Override
+   public boolean run(StateManager st) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
     
 }

@@ -9,7 +9,7 @@ package puzzlesolver;
  *
  * @author kordusj
  */
-public class SearchMethod 
+public abstract class SearchMethod 
 {
     private State winPath[];
     
@@ -17,7 +17,7 @@ public class SearchMethod
     
     
     //Command to execute
-    public void run(){};
+    abstract public boolean run(StateManager st);
     
     
     //prints out the winning path
