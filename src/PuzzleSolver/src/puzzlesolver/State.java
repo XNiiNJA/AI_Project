@@ -22,10 +22,21 @@ public class State
     private float gScore = Float.MAX_VALUE;
     private float fScore = Float.MAX_VALUE;
     private float hScore;
+    private int pHeight;
+    private int pWidth;
     
+    State (int iHeight, int iWidth)
+    {
+        pHeight = iHeight;
+        pWidth = iWidth;
+        curState = new int[pHeight][pWidth];
+        Shuffler();
+    }
     State(int newState[][])
     {
         curState = newState;
+        pHeight = newState.length;
+        pWidth = newState[0].length;
     }
     
     public boolean Compare(State toCompare)
@@ -134,6 +145,48 @@ public class State
         System.out.print("\n");
         }
     }
+    
+    public void Shuffler()
+    {
+        int NORTH = 0;
+        int EAST = 1;
+        int WEST = 2;
+        int SOUTH = 3;
+        int randir;
+        int shufflenum = 1000;
+        for (int i = 0; i < pHeight; i++)
+            for (int j = 0; j < pWidth; j++)
+                curState[i][j] = (i * pWidth) + j + 1;
+        curState[pHeight-1][pWidth-1]=0;
+        int posx = pWidth - 1;
+        int posy = pHeight - 1;
+        for (int i = 0; i < shufflenum; i++)
+        {
+            randir = (int)(Math.random() * 4);
+            if(randir == NORTH && posy > 0)
+            {
+                curState[posy][posx] = curState[posy-1][posx];
+                curState[posy-1][posx]=0;
+                posy--;
+            }
+            else if(randir == EAST && posx < (pWidth-1))
+            {
+                curState[posy][posx] = curState[posy][posx+1];
+                curState[posy][posx+1]=0;
+                posx++;
+            }
+            else if(randir == WEST && posx > 0)
+            {
+                curState[posy][posx] = curState[posy][posx-1];
+                curState[posy][posx-1] = 0;
+                posx--;
+            }
+            else if(randir == SOUTH && posy < (pHeight-1))
+            {
+                curState[posy][posx] = curState[posy+1][posx];
+                curState[posy+1][posx]=0;
+                posy++;
+            }
+        }
+    }
 }
-
-
