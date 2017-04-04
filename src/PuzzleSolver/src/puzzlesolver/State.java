@@ -6,149 +6,137 @@
 package puzzlesolver;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  *
  * @author kordusj
  */
-public class State 
-{
-    private State nextStates[];
-    
-    private State previous;
-    
-    private int curState [][];
-    
-    private float gScore = Float.MAX_VALUE;
-    private float fScore = Float.MAX_VALUE;
-    private float hScore;
-    private int pHeight;
-    private int pWidth;
-    
-    State (int iHeight, int iWidth)
-    {
-        pHeight = iHeight;
-        pWidth = iWidth;
-        curState = new int[pHeight][pWidth];
-        Shuffler();
-    }
-    State(int newState[][])
-    {
-        curState = newState;
-        pHeight = newState.length;
-        pWidth = newState[0].length;
-    }
-    
-    public boolean Compare(State toCompare)
-    {
-        return curState.equals(toCompare);
-    }
-    
-    public boolean setNext(State next[])
-    {
-        if(next == null)
-            return false;
-        nextStates = next;
-        return true;
-    }
-    
-    public boolean setPrevious(State state)
-    {
-       if(state != null)
-          previous = state;
-         
-       return state != null;
-    }
-    
-    public State getPrevious()
-    {
-       return previous;
-    }
-    
-    public int[][] getState()
-    {
-        return curState;
-    }
+public class State {
 
-    public void setGScore(float g)
-    {
-       gScore = g;
-    }
-    
-    public void setFScore(float f)
-    {
-       fScore = f;
-    }
-    
-    public void setHScore(float h)
-    {
-       hScore = h;
-    }
-    
-    public float getGScore()
-    {
-       return gScore;
-    }
-    
-    public float getFScore()
-    {
-       return fScore;
-    }
-    
-    public float getHScore()
-    {
-       return hScore;
-    }
-    
+   private static final int SHUFFLE_TIMES = 5000;
+
+   private State nextStates[];
+
+   private State previous;
+
+   private int curState[][];
+
+   private float gScore = Float.MAX_VALUE;
+   private float fScore = Float.MAX_VALUE;
+   private float hScore;
+   private int pHeight;
+   private int pWidth;
+
+   State(int iHeight, int iWidth) {
+      pHeight = iHeight;
+      pWidth = iWidth;
+      curState = new int[pHeight][pWidth];
+      Shuffler();
+   }
+
+   State(int newState[][]) {
+      curState = newState;
+      pHeight = newState.length;
+      pWidth = newState[0].length;
+   }
+
+   public boolean Compare(State toCompare) {
+      return curState.equals(toCompare);
+   }
+
+   public boolean setNext(State next[]) {
+      if (next == null) {
+         return false;
+      }
+      nextStates = next;
+      return true;
+   }
+
+   public boolean setPrevious(State state) {
+      if (state != null) {
+         previous = state;
+      }
+
+      return state != null;
+   }
+
+   public State getPrevious() {
+      return previous;
+   }
+
+   public int[][] getState() {
+      return curState;
+   }
+
+   public void setGScore(float g) {
+      gScore = g;
+   }
+
+   public void setFScore(float f) {
+      fScore = f;
+   }
+
+   public void setHScore(float h) {
+      hScore = h;
+   }
+
+   public float getGScore() {
+      return gScore;
+   }
+
+   public float getFScore() {
+      return fScore;
+   }
+
+   public float getHScore() {
+      return hScore;
+   }
+
    @Override
    public int hashCode() {
       int hash = 7;
       hash = 61 * hash + Arrays.deepHashCode(this.curState);
       return hash;
    }
-    
-    @Override
-    public boolean equals(Object o)
-    {
-       
-       if(o instanceof State)
-       {
-          State s = (State)o;
-          
-          int[][] raw = s.getState();
-          
-          for(int i = 0; i < raw.length; i++)
-          {
-             for(int j = 0; j < raw[i].length; j++)
-                if(raw[i][j] != curState[i][j])
+
+   @Override
+   public boolean equals(Object o) {
+
+      if (o instanceof State) {
+         State s = (State) o;
+
+         int[][] raw = s.getState();
+
+         for (int i = 0; i < raw.length; i++) {
+            for (int j = 0; j < raw[i].length; j++) {
+               if (raw[i][j] != curState[i][j]) {
                   return false;
-          }
-          
-          return true;
-       }
-       
-       return false;
-       
-    }
-    
-    
-    // Tod - made a simple print state method. Haven't tested it, but it should come in handy when we need to debug, can
-    // make more pretty later
-    public void printCurrentState()
-    {
-        for (int i = 0; i < curState.length; i++)
-        {
-            for(int j = 0; j < curState[i].length; j++)
-            {
-                System.out.print(curState[i][j] + " ");
+               }
             }
-        System.out.print("\n");
-        }
-    }
-    
-    public void Shuffler()
-    {
-        int NORTH = 0;
+         }
+
+         return true;
+      }
+
+      return false;
+
+   }
+
+   // Tod - made a simple print state method. Haven't tested it, but it should come in handy when we need to debug, can
+   // make more pretty later
+   public void printCurrentState() {
+      for (int i = 0; i < curState.length; i++) {
+         for (int j = 0; j < curState[i].length; j++) {            
+            System.out.print(curState[i][j]);
+            System.out.print("\t");
+         }
+         System.out.print("\n");
+      }
+   }
+
+   public void Shuffler() {
+      /* int NORTH = 0;
         int EAST = 1;
         int WEST = 2;
         int SOUTH = 3;
@@ -187,6 +175,75 @@ public class State
                 curState[posy+1][posx]=0;
                 posy++;
             }
-        }
-    }
+        }*/
+
+      State current = StateManager.generateGoalState(pWidth, pHeight);
+
+      boolean doRand = false;
+      int curCount = 0;
+      int switchCount = 50;
+
+      StateManager st = new StateManager(current);
+
+      st.goalState(pWidth, pHeight);
+
+      Random rand = new Random();
+
+      rand.setSeed(System.currentTimeMillis());
+
+      int numShuffle = rand.nextInt(SHUFFLE_TIMES);
+
+      for (int i = 0; i < numShuffle; i++) {
+
+         State[] next = st.GetNextStates(current);
+
+         float heu = 0;
+         int ourIndex = 0;
+
+         for (int j = 0; j < next.length; j++) {
+            
+            if (doRand) {
+               ourIndex = (int) (rand.nextFloat() * (next.length));//rand.nextInt(next.length - 1);
+
+               ourIndex = Math.min(ourIndex, next.length - 1);
+
+               break;
+
+            }
+            else {
+
+               float thisHeu = st.getHeuristic(next[j]);
+               if (thisHeu > heu) {
+                  heu = thisHeu;
+                  ourIndex = j;
+               }
+
+            }
+            
+           
+
+         }
+         
+         curCount++;
+         
+         if(curCount >= switchCount)
+         {
+            doRand = !doRand;
+            curCount = 0;
+         }
+         
+         current = next[ourIndex];
+         
+         //current.printCurrentState();
+         //System.out.print("\n\n\n");
+         //System.out.println(ourIndex);
+
+      }
+
+      System.out.print("Shuffled with heuristic: ");
+      System.out.println(st.getHeuristic(current));
+      
+      curState = current.getState();
+
+   }
 }

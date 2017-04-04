@@ -160,7 +160,13 @@ public class AStarSearch extends SearchMethod{
    public static void main(String args[])
    {
       
-     // new AStarSearch().run(new StateManager());
+      State start = new State(2, 3);
+      
+      StateManager st = new StateManager(start);
+              
+      st.goalState(2, 3);
+      
+      new AStarSearch().run(st);
       
       
       

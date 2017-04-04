@@ -36,8 +36,8 @@ public class StateManager {
         tall = length;
         across = width;
         int setGoal[][] = new int[width][length];
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < length; j++) {
                 setGoal[i][j] = width * i + j;
             }
         }
@@ -45,6 +45,18 @@ public class StateManager {
         goal = new State(setGoal);
     }
 
+    public static State generateGoalState(int width, int length)
+    {
+        int setGoal[][] = new int[width][length];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < length; j++) {
+                setGoal[i][j] = width * i + j;
+            }
+        }
+
+        return new State(setGoal);
+    }
+    
     public boolean FoundGoal(State curState) 
     {
         return curState.equals(goal);
@@ -219,8 +231,8 @@ public class StateManager {
 
         int[][] newRaw = new int[across][tall];
 
-        for (int i = 0; i < tall; i++) {
-            for (int j = 0; j < across; j++) {
+        for (int i = 0; i < across; i++) {
+            for (int j = 0; j < tall; j++) {
                 newRaw[i][j] = state.getState()[i][j];
             }
         }
