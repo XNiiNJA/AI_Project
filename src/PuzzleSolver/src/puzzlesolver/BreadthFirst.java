@@ -42,25 +42,28 @@ public class BreadthFirst extends SearchMethod {
                 if(!passedStates.contains(temp[i]))
                 {
                     states.add(temp[i]);
-                    temp[i].printCurrentState();
+                    passedStates.add(temp[i]);
                 }
                 else
                 {
-                    System.out.println("Visited");
-                    System.out.println((float)(++x / (float) 181000));
+                    System.out.println((float)(passedStates.size()/ (float) 181000));
                 }
             }
-            if(init.FoundGoal(states.get(first)))
+            if(states.contains(init.getGoal()))
+            {
                 goal = true;
+            }
+            stepsIn++;
                 
         }
-        display(stepsIn, states.get(first));
+        int index = states.indexOf(init.getGoal());
+        display(states.get(index));
         return true;
     }
 
-    private void display(int runs, State win) 
+    private void display( State win) 
     {
-        System.out.println("Success after: " + runs);
+        System.out.println("Success after: " + stepsIn);
         win.printCurrentState();
     }
 }

@@ -34,17 +34,17 @@ public class PuzzleSolver
         System.out.println("Pardon the Dust, we are still working on it");
         int start[][] = new int[3][3];
         //=================
-        start[0][0] = 6;
-        start[0][1] = 5;
-        start[0][2] = 1;
+        start[0][0] = 7;
+        start[0][1] = 8;
+        start[0][2] = 5;
         //=================
-        start[1][0] = 8;
-        start[1][1] = 2;
-        start[1][2] = 7;
+        start[1][0] = 2;
+        start[1][1] = 3;
+        start[1][2] = 9;
         //=================
-        start[2][0] = 4;
-        start[2][1] = 9;
-        start[2][2] = 3;
+        start[2][0] = 6;
+        start[2][1] = 1;
+        start[2][2] = 4;
         //=================
         State init = new State(start);
         StateManager manage = new StateManager(init);

@@ -44,6 +44,11 @@ public class StateManager {
         goal = new State(start);
         goal.printCurrentState();
     }
+    
+    public State getGoal()
+    {
+        return goal;
+    }
 
     public boolean FoundGoal(State curState) 
     {
