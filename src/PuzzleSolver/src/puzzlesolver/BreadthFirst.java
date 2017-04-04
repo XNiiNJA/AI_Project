@@ -13,108 +13,57 @@ import java.util.*;
  */
 public class BreadthFirst extends SearchMethod {
 
-    private State toProcess[];
+    private List<State> states;
+    private List<State> passedStates;
     private StateManager manager;
     private int size;
-    private State passedStates[];
     private int stepsIn;
+    private int first = 0;
 
     BreadthFirst() {
         size = 1;
         stepsIn = 0;
-        toProcess = new State[size];
-        passedStates = new State[stepsIn];
-    }
-
-    private void growTree() {
-        size++;
-        State temp[] = toProcess;
-        toProcess = new State[size];
-        toProcess = Arrays.copyOf(temp, size);
+        states = new ArrayList<State>();
+        passedStates = new ArrayList<State>();
     }
 
     @Override
-    public boolean run(StateManager init) {
-        boolean goalReached = false;
-        manager = init;
-        toProcess[0] = manager.getStart();
-        int oldSize;
-        int itterations = 0;
-        while (!goalReached) {
-            itterations++;
-            oldSize = size;
-            for (int i = 0; i < size; i++) {
-                if (manager.FoundGoal(toProcess[i])) {
-                    goalReached = true;
-                    display(itterations, toProcess[i]);
+    public boolean run(StateManager init) 
+    {
+        states.add(init.getStart());
+        float x = 0;
+        boolean goal = false;
+        while(!goal)
+        {
+            State temp[] = init.GetNextStates(states.get(first));
+            passedStates.add(states.remove(first));
+            for(int i = 0; i < temp.length; i++)
+            {
+                if(!passedStates.contains(temp[i]))
+                {
+                    states.add(temp[i]);
+                    passedStates.add(temp[i]);
+                }
+                else
+                {
+                    System.out.println((float)(passedStates.size()/ (float) 181000));
                 }
             }
-            for (int i = 0; i < oldSize; i++) {
-                State tempState[] = manager.GetNextStates(toProcess[i]);
-                stepInto(toProcess[0]);
-                removeFirst();
-                //System.out.println(tempState.length);
-                for (int j = 0; j < tempState.length; j++) {
-                    if (!Visited(tempState[j])) {
-                        addState(tempState[j]);
-                    }
-                }
+            if(states.contains(init.getGoal()))
+            {
+                goal = true;
             }
-
-            if (goalReached == false) {
-                System.out.println(itterations);
-            }
+            stepsIn++;
+                
         }
+        int index = states.indexOf(init.getGoal());
+        display(states.get(index));
         return true;
     }
 
-    private void display(int runs, State win) {
-        System.out.println("Success after: " + runs);
+    private void display( State win) 
+    {
+        System.out.println("Success after: " + stepsIn);
         win.printCurrentState();
-
-    }
-
-    private void addState(State toAdd) {
-        growTree();
-        toProcess[size - 1] = toAdd;
-    }
-
-    private void removeFirst() {
-        if (size > 1) {
-            for (int i = 1; i < size - 1; i++) {
-                toProcess[i - 1] = toProcess[i];
-            }
-        } else {
-            toProcess = new State[size];
-        }
-        size--;
-    }
-
-    public boolean Visited(State toCheck) {
-        if (stepsIn == 0) {
-            State tempStates[];
-            tempStates = passedStates;
-            passedStates = new State[stepsIn + 1];
-            State temp = toCheck;
-            for (int i = 0; i < stepsIn; i++) {
-                if (temp.Compare(passedStates[i]));
-                {
-                    System.out.println("Visited");
-                    return true;
-                }
-            }
-        }
-        System.out.println("not Visited");
-        return false;
-    }
-
-    //progresses the state forward one and stores the previous state on a
-    //stack
-    public void stepInto(State expanding) {
-        stepsIn++;
-        State temp[] = passedStates;
-        passedStates = new State[size];
-        passedStates = Arrays.copyOf(temp, stepsIn);
-        passedStates[stepsIn - 1] = expanding;
     }
 }

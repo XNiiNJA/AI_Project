@@ -35,14 +35,26 @@ public class StateManager {
     public void goalState(int width, int length) {
         tall = length;
         across = width;
+<<<<<<< HEAD
         int setGoal[][] = new int[width][length];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < length; j++) {
                 setGoal[i][j] = width * i + j;
+=======
+        int start[][] = new int[tall][across];
+        for (int i = 0; i < tall; i++) {
+            for (int j = 0; j < across; j++) {
+                start[i][j] = across * i + j+1;
+>>>>>>> origin/master
             }
         }
-
-        goal = new State(setGoal);
+        goal = new State(start);
+        goal.printCurrentState();
+    }
+    
+    public State getGoal()
+    {
+        return goal;
     }
 
     public static State generateGoalState(int width, int length)
@@ -59,20 +71,14 @@ public class StateManager {
     
     public boolean FoundGoal(State curState) 
     {
-        return curState.equals(goal);
+        return curState == goal;
     }
 
-    //returns all availble states in an array
-    //pos [0] = move empty space down
-    //pos [1] = move empty up
-    //pos [2] = move empty left
-    //pos [3] = move empty right
-    //places null in respective slot if state is not valid
     public State[] GetNextStates(State curState) {
         ArrayList<State> a = new ArrayList<>();
         int[][] raw = curState.getState();
         //Find the coordinates of the empty spot (0)
-        Point p = findPoint(0, curState);
+        Point p = findPoint(9, curState);
         State temp;
         if (across > p.x + 1) {
             //We can move right
@@ -112,8 +118,6 @@ public class StateManager {
         }
         return a.toArray(new State[a.size()]);
     }
-
-
 
     public boolean addToClosedSet(State state) {
 
@@ -199,8 +203,6 @@ public class StateManager {
         return lowest;
 
     }
-
-
 
     public float getHeuristic(State state) {
 

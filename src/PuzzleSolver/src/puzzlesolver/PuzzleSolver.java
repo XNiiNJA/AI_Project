@@ -34,17 +34,17 @@ public class PuzzleSolver
         System.out.println("Pardon the Dust, we are still working on it");
         int start[][] = new int[3][3];
         //=================
-        start[0][0] = 2;
+        start[0][0] = 7;
         start[0][1] = 8;
-        start[0][2] = 6;
+        start[0][2] = 5;
         //=================
-        start[1][0] = 3;
-        start[1][1] = 5;
-        start[1][2] = 0;
+        start[1][0] = 2;
+        start[1][1] = 3;
+        start[1][2] = 9;
         //=================
-        start[2][0] = 1;
-        start[2][1] = 4;
-        start[2][2] = 7;
+        start[2][0] = 6;
+        start[2][1] = 1;
+        start[2][2] = 4;
         //=================
         State init = new State(start);
         StateManager manage = new StateManager(init);
@@ -53,10 +53,7 @@ public class PuzzleSolver
         while (!input.equals("Exit")) {
 
             System.out.println("Initial State is:");
-
-            System.out.println("|2 8 6|");
-            System.out.println("|3 5 0|");
-            System.out.println("|1 4 7|");
+            init.printCurrentState();
             System.out.println("Which method would you like to use?");
             System.out.println("Enter: Breadth | A* | Beam | Exit ");
             try {
