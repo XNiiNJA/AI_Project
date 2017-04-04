@@ -10,23 +10,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 //Initial State
-//   2 8 6
-//   3 5 x
-//   1 4 7
+//   1 2 3
+//   4 5 6
+//   7 9 8
 /**
  *
  * @author Grant
  */
-public class PuzzleSolver 
-{
+public class PuzzleSolver {
+
     private static BreadthFirst breadth;
-    private static AStarSearch  astar;
+    private static AStarSearch astar;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
         breadth = new BreadthFirst();
         astar = new AStarSearch();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -34,18 +33,19 @@ public class PuzzleSolver
         System.out.println("Pardon the Dust, we are still working on it");
         int start[][] = new int[3][3];
         //=================
-        start[0][0] = 7;
-        start[0][1] = 8;
-        start[0][2] = 5;
+        start[0][0] = 4;
+        start[0][1] = 1;
+        start[0][2] = 7;
         //=================
-        start[1][0] = 2;
-        start[1][1] = 3;
-        start[1][2] = 9;
+        start[1][0] = 9;
+        start[1][1] = 6;
+        start[1][2] = 5;
         //=================
-        start[2][0] = 6;
-        start[2][1] = 1;
-        start[2][2] = 4;
+        start[2][0] = 2;
+        start[2][1] = 3;
+        start[2][2] = 8;
         //=================
+
         State init = new State(start);
         StateManager manage = new StateManager(init);
         manage.goalState(3, 3);
@@ -58,15 +58,15 @@ public class PuzzleSolver
             System.out.println("Enter: Breadth | A* | Beam | Exit ");
             try {
                 input = in.readLine();
-                
-                
-                if(input.equals("Breadth"))
-                   breadth.run(manage);
-                else if(input.equals("A*"))
-                   astar.run(manage);
-                else if(input.equals("Beam"))
-                   continue;
-                
+
+                if (input.equals("Breadth")) {
+                    breadth.run(manage);
+                } else if (input.equals("A*")) {
+                    astar.run(manage);
+                } else if (input.equals("Beam")) {
+                    continue;
+                }
+
                 /*
                 switch (input) {
                     case "Breadth":
