@@ -42,6 +42,11 @@ public class State
         pWidth = newState[0].length;
     }
     
+    public int[][] getState()
+    {
+        return curState;
+    }
+    
     public void initPath(String init)
     {
         path = init;
@@ -81,11 +86,6 @@ public class State
     public State getPrevious()
     {
        return previous;
-    }
-    
-    public int[][] getState()
-    {
-        return curState;
     }
     
    public void setGScore(float g) {
