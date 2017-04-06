@@ -5,7 +5,6 @@
  */
 package puzzlesolver;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.List;
@@ -28,7 +27,6 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
    public PuzzleSolveFrame() {
       initComponents();
       G = MainPannel.getGraphics();
-      manager = new StateManager();
       breadth = new BreadthFirst();
       position = 0;
    }
@@ -63,6 +61,14 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
         Next = new javax.swing.JButton();
         Reset = new javax.swing.JButton();
         Previous = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        Time = new javax.swing.JTextField();
+        Steps = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        depth = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -76,11 +82,11 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
         MainPannel.setLayout(MainPannelLayout);
         MainPannelLayout.setHorizontalGroup(
             MainPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 662, Short.MAX_VALUE)
+            .addGap(0, 322, Short.MAX_VALUE)
         );
         MainPannelLayout.setVerticalGroup(
             MainPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGap(0, 337, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(51, 255, 0));
@@ -134,6 +140,11 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
         });
 
         Reset.setText("Reset");
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetActionPerformed(evt);
+            }
+        });
 
         Previous.setText("<< Previous");
         Previous.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +184,7 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
                                 .addComponent(B, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(C, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                                 .addComponent(Previous)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -220,23 +231,78 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setText("Test Results");
+
+        jLabel2.setText("Run Time (mS):");
+
+        jLabel3.setText("States Checked:");
+
+        jLabel4.setText("Moves to Win:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Steps)
+                    .addComponent(Time)
+                    .addComponent(jLabel1)
+                    .addComponent(depth, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Steps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(depth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(MainPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(MainPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MainPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
@@ -250,29 +316,30 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_DrawBTNActionPerformed
 
     private void BreadthSolveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BreadthSolveActionPerformed
-        try
-        {
+
+            manager = new StateManager(generateState());
             manager.goalState(3, 3);
-            generateState();
             G.clearRect(0, 0, 500, 500);
             G.drawString("Working...", 150, 100);
-            Thread.sleep(45000);
+            //Thread.sleep(45000);
+            long startTime = System.currentTimeMillis();
             breadth.run(manager);
+            long RunTime = System.currentTimeMillis() - startTime;
+            Time.setText(Long.toString(RunTime));
             G.clearRect(0, 0, 500, 500);
-        }
-        catch(Exception e)
-        {
-            
-        }
-        //winPath = breadth.getWin();
-        //drawState(winPath.get(position));
+            winPath = breadth.getWin();
+            Steps.setText(Integer.toString(breadth.getSteps()));
+            depth.setText(Integer.toString(breadth.getDepth()));
+            generatePuzzle();
+            drawState(winPath.get(position++));
     }//GEN-LAST:event_BreadthSolveActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
-        if(position < winPath.size())
+        if(position < winPath.size() - 1)
         {
             position++;
             G.clearRect(0, 0, 500, 500);
+            generatePuzzle();
             drawState(winPath.get(position));
         }
     }//GEN-LAST:event_NextActionPerformed
@@ -282,9 +349,17 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
         {
             position--;
             G.clearRect(0, 0, 500, 500);
+            generatePuzzle();
             drawState(winPath.get(position));
         }
     }//GEN-LAST:event_PreviousActionPerformed
+
+    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
+        position = 0;
+        G.clearRect(0, 0, 500, 500);
+        generatePuzzle();
+        drawState(winPath.get(position++));
+    }//GEN-LAST:event_ResetActionPerformed
 
     
     private void generatePuzzle()
@@ -314,7 +389,15 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
         G.drawString(I.getText(), 215, 188);
     }
     
-    public void generateState()
+    private void checkFree(String toWrite, int X, int Y)
+    {
+        if(toWrite.equals("9"))
+            G.drawString("X", X, Y);
+        else
+            G.drawString(toWrite, X, Y);
+    }
+    
+    public State generateState()
     {
         int start[][] = new int[3][3];
         //=================
@@ -331,22 +414,22 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
         start[2][2] = 8;//Integer.parseInt(I.getText());
         //=================
         State init = new State(start);
-        manager = new StateManager(init);
+        return init;
     }
     
     private void drawState(State toDraw)
     {   
         int state[][] = toDraw.getState();
         G.setFont(new Font ("Ariel",Font.BOLD, 36));
-        G.drawString(Integer.toString(state[0][0]), 115, 88);
-        G.drawString(Integer.toString(state[0][1]), 165, 88);
-        G.drawString(Integer.toString(state[0][2]), 215, 88);
-        G.drawString(Integer.toString(state[1][0]), 115, 138);
-        G.drawString(Integer.toString(state[1][1]), 165, 138);
-        G.drawString(Integer.toString(state[1][2]), 215, 138);
-        G.drawString(Integer.toString(state[2][0]), 115, 188);
-        G.drawString(Integer.toString(state[2][1]), 165, 188);
-        G.drawString(Integer.toString(state[2][2]), 215, 188);
+        checkFree(Integer.toString(state[0][0]), 115, 88);
+        checkFree(Integer.toString(state[0][1]), 165, 88);
+        checkFree(Integer.toString(state[0][2]), 215, 88);
+        checkFree(Integer.toString(state[1][0]), 115, 138);
+        checkFree(Integer.toString(state[1][1]), 165, 138);
+        checkFree(Integer.toString(state[1][2]), 215, 138);
+        checkFree(Integer.toString(state[2][0]), 115, 188);
+        checkFree(Integer.toString(state[2][1]), 165, 188);
+        checkFree(Integer.toString(state[2][2]), 215, 188);
     }
    /**
     * @param args the command line arguments
@@ -402,9 +485,17 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
     private javax.swing.JButton Next;
     private javax.swing.JButton Previous;
     private javax.swing.JButton Reset;
+    private javax.swing.JTextField Steps;
+    private javax.swing.JTextField Time;
+    private javax.swing.JTextField depth;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

@@ -38,8 +38,8 @@ public class State
     State(int newState[][])
     {
         curState = newState;
-        pHeight = newState.length;
-        pWidth = newState[0].length;
+        //pHeight = newState.length;
+        //pWidth = newState[0].length;
     }
     
     public int[][] getState()

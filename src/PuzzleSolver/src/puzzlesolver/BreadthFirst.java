@@ -19,9 +19,11 @@ public class BreadthFirst extends SearchMethod {
     private List<State> win;
     private int stepsIn;
     private int first = 0;
+    private int depth;
 
     BreadthFirst() {
         stepsIn = 0;
+        depth = 0;
         states = new ArrayList<>();
         passedStates = new ArrayList<>();
         removedStates = new ArrayList<>();
@@ -60,7 +62,7 @@ public class BreadthFirst extends SearchMethod {
 
         }
         int index = states.indexOf(init.getGoal());
-        display(states.get(index));
+        //display(states.get(index));
         calculatePath(index);
         return true;
     }
@@ -69,15 +71,26 @@ public class BreadthFirst extends SearchMethod {
         System.out.println("Success after: " + stepsIn);
         win.printCurrentState();
     }
+    
+    public int getSteps()
+    {
+        return stepsIn;
+    }
+    
+    public int getDepth()
+    {
+        return depth;
+    }
 
     public void calculatePath(int index) 
     {
         win = new ArrayList<>();
         String winningPath = states.get(index).getPath();
+        win.add(removedStates.get(first));
         int endIndex = 3;
-        System.out.println("Calculate win");
-        System.out.println("Win path: " + winningPath);
-        System.out.println("======================================");
+        //System.out.println("Calculate win");
+        //System.out.println("Win path: " + winningPath);
+        //System.out.println("======================================");
         while (endIndex <= winningPath.length()) 
         {
             for(int i = 0; i < removedStates.size(); i++)
@@ -86,18 +99,19 @@ public class BreadthFirst extends SearchMethod {
                         winningPath.substring(0, endIndex)))
                 {
                     win.add(removedStates.get(i));
+                    depth++;
                     break;
                 }
             }
             endIndex += 2;
         }
         win.add(states.get(index));
-        System.out.println("Path found:");
-        for(int i = 0; i < win.size(); i++)
-        {
-            System.out.println(win.get(i).getPath());
-        }
-        System.out.println("End Algorithm");
+        //System.out.println("Path found:");
+        //for(int i = 0; i < win.size(); i++)
+        //{
+        //    System.out.println(win.get(i).getPath());
+        //}
+        //System.out.println("End Algorithm");
 
     }
 }
