@@ -15,7 +15,6 @@ import java.util.Iterator;
  */
 public class StateManager {
 
-
     private State goal;
     private HashSet closedSet = new HashSet(); //Evaluated Nodes
     private HashSet openSet = new HashSet();   //Discovered but not evaluated nodes
@@ -29,12 +28,16 @@ public class StateManager {
     StateManager(){};
 >>>>>>> origin/master
 
+    StateManager() {
+    }
+
+    ;
+
     StateManager(State init) {
         start = init;
     }
-    
-    public State getStart()
-    {
+
+    public State getStart() {
         return start;
     }
 
@@ -55,25 +58,21 @@ public class StateManager {
         goal = new State(start);
 =======
         int setGoal[][] = new int[width][length];
-        for (int i = 0; i < width; i++) 
-        {
-            for (int j = 0; j < length; j++) 
-            {
-                setGoal[i][j] = width * i + j +1;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < length; j++) {
+                setGoal[i][j] = width * i + j + 1;
             }
         }
         goal = new State(setGoal);
 >>>>>>> origin/master
         goal.printCurrentState();
     }
-    
-    public State getGoal()
-    {
+
+    public State getGoal() {
         return goal;
     }
 
-    public static State generateGoalState(int width, int length)
-    {
+    public static State generateGoalState(int width, int length) {
         int setGoal[][] = new int[width][length];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < length; j++) {
@@ -83,9 +82,8 @@ public class StateManager {
 
         return new State(setGoal);
     }
-    
-    public boolean FoundGoal(State curState) 
-    {
+
+    public boolean FoundGoal(State curState) {
         return curState == goal;
     }
 
@@ -245,25 +243,17 @@ public class StateManager {
     }
 
     private State swapPoints(State state, Point a, Point b) {
-
         int[][] newRaw = new int[across][tall];
-
         for (int i = 0; i < across; i++) {
             for (int j = 0; j < tall; j++) {
                 newRaw[i][j] = state.getState()[i][j];
             }
         }
-
         State newState = new State(newRaw);
-
         int temp = newState.getState()[a.x][a.y];
-
         newState.getState()[a.x][a.y] = newState.getState()[b.x][b.y];
-
         newState.getState()[b.x][b.y] = temp;
-
         return newState;
-
     }
 
     private Point findPoint(int x, State state) {
