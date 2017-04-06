@@ -22,6 +22,7 @@ public class StateManager {
     private int across;
     private int tall;
     private State start;
+    private int movablePiece = 0;
 
     StateManager(State init) {
         start = init;
@@ -35,19 +36,16 @@ public class StateManager {
     public void goalState(int width, int length) {
         tall = length;
         across = width;
-<<<<<<< HEAD
-        int setGoal[][] = new int[width][length];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < length; j++) {
-                setGoal[i][j] = width * i + j;
-=======
+        
         int start[][] = new int[tall][across];
         for (int i = 0; i < tall; i++) {
             for (int j = 0; j < across; j++) {
                 start[i][j] = across * i + j+1;
->>>>>>> origin/master
             }
         }
+        
+        movablePiece = width * length;
+        
         goal = new State(start);
         goal.printCurrentState();
     }
@@ -78,7 +76,7 @@ public class StateManager {
         ArrayList<State> a = new ArrayList<>();
         int[][] raw = curState.getState();
         //Find the coordinates of the empty spot (0)
-        Point p = findPoint(9, curState);
+        Point p = findPoint(movablePiece, curState);
         State temp;
         if (across > p.x + 1) {
             //We can move right

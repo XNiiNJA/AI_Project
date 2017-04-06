@@ -60,7 +60,7 @@ public class AStarSearch extends SearchMethod{
       {
          current = st.findLowestF();
          
-         if(st.FoundGoal(current))
+         if(st.getGoal().Compare(current))
          {
             System.out.println("Found!");
             display(current);
