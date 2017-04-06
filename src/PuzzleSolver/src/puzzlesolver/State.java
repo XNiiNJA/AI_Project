@@ -12,63 +12,82 @@ import java.util.Random;
  *
  * @author kordusj
  */
-public class State {
-
-   private static final int SHUFFLE_TIMES = 5000;
-
-   private State nextStates[];
-
-   private State previous;
-
-   private int curState[][];
-
-   private float gScore = Float.MAX_VALUE;
-   private float fScore = Float.MAX_VALUE;
-   private float hScore;
-   private int pHeight;
-   private int pWidth;
-
-   State(int iHeight, int iWidth) {
-      pHeight = iHeight;
-      pWidth = iWidth;
-      curState = new int[pHeight][pWidth];
-      Shuffler();
-   }
-
-   State(int newState[][]) {
-      curState = newState;
-      pHeight = newState.length;
-      pWidth = newState[0].length;
-   }
-
-   public boolean Compare(State toCompare) {
-      return curState.equals(toCompare);
-   }
-
-   public boolean setNext(State next[]) {
-      if (next == null) {
-         return false;
-      }
-      nextStates = next;
-      return true;
-   }
-
-   public boolean setPrevious(State state) {
-      if (state != null) {
-         previous = state;
-      }
-
-      return state != null;
-   }
-
-   public State getPrevious() {
-      return previous;
-   }
-
-   public int[][] getState() {
-      return curState;
-   }
-
+public class State 
+{
+    private static final int SHUFFLE_TIMES = 5000;
+    private State nextStates[];
+    
+    private State previous;
+    
+    private int curState [][];
+    
+    private float gScore = Float.MAX_VALUE;
+    private float fScore = Float.MAX_VALUE;
+    private float hScore;
+    private int pHeight;
+    private int pWidth;
+    private String path;
+    
+    State (int iHeight, int iWidth)
+    {
+        pHeight = iHeight;
+        pWidth = iWidth;
+        curState = new int[pHeight][pWidth];
+        Shuffler();
+    }
+    State(int newState[][])
+    {
+        curState = newState;
+        pHeight = newState.length;
+        pWidth = newState[0].length;
+    }
+    
+    public int[][] getState()
+    {
+        return curState;
+    }
+    
+    public void initPath(String init)
+    {
+        path = init;
+    }
+    
+    public String getPath()
+    {
+        return path;
+    }
+    
+    public void appendPath(String nextIden)
+    {
+        path += '|' + nextIden;
+    }
+    
+    public boolean Compare(State toCompare)
+    {
+        return curState.equals(toCompare);
+    }
+    
+    public boolean setNext(State next[])
+    {
+        if(next == null)
+            return false;
+        nextStates = next;
+        return true;
+    }
+    
+    public boolean setPrevious(State state)
+    {
+       if(state != null)
+          previous = state;
+         
+       return state != null;
+    }
+    
+    public State getPrevious()
+    {
+       return previous;
+    }
+    
    public void setGScore(float g) {
       gScore = g;
    }
@@ -136,6 +155,7 @@ public class State {
    }
 
    public void Shuffler() {
+
       /* int NORTH = 0;
         int EAST = 1;
         int WEST = 2;

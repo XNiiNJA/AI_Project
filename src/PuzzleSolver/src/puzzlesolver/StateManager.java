@@ -22,7 +22,12 @@ public class StateManager {
     private int across;
     private int tall;
     private State start;
+<<<<<<< HEAD
     private int movablePiece = 0;
+=======
+    
+    StateManager(){};
+>>>>>>> origin/master
 
     StateManager(State init) {
         start = init;
@@ -36,6 +41,7 @@ public class StateManager {
     public void goalState(int width, int length) {
         tall = length;
         across = width;
+<<<<<<< HEAD
         
         int start[][] = new int[tall][across];
         for (int i = 0; i < tall; i++) {
@@ -47,6 +53,17 @@ public class StateManager {
         movablePiece = width * length;
         
         goal = new State(start);
+=======
+        int setGoal[][] = new int[width][length];
+        for (int i = 0; i < width; i++) 
+        {
+            for (int j = 0; j < length; j++) 
+            {
+                setGoal[i][j] = width * i + j +1;
+            }
+        }
+        goal = new State(setGoal);
+>>>>>>> origin/master
         goal.printCurrentState();
     }
     
@@ -122,7 +139,7 @@ public class StateManager {
         boolean result = closedSet.add(state);
 
         if (closedSet.size() % 10000 == 0) {
-            System.out.println("ratio: " + (float) openSet.size() / closedSet.size());
+            //System.out.println("ratio: " + (float) openSet.size() / closedSet.size());
         }
         return result;
 
