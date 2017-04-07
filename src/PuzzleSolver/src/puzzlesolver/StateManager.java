@@ -227,6 +227,31 @@ public class StateManager {
         //return 0;
     }
 
+        public float getManhattanHeuristic(State state) {
+
+        int[][] rawState = state.getState();
+
+        float totalDist = 0;
+
+        for (int i = 0; i < rawState.length; i++) {
+
+            for (int j = 0; j < rawState[i].length; j++) {
+
+                Point goalPoint = findPoint(rawState[i][j], goal);
+                Point thisPoint = new Point(i, j);
+
+                if (thisPoint != null && goalPoint != null) {
+                    totalDist += Utils.manhattanDistance(goalPoint, thisPoint);
+                }
+
+            }
+
+        }
+
+        return totalDist;
+        //return 0;
+    }
+    
     private State swapPoints(State state, Point a, Point b) {
        int width = state.getWidth();
        int height = state.getHeight();
