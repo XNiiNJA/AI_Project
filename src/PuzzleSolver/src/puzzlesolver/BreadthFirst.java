@@ -28,12 +28,10 @@ public class BreadthFirst extends SearchMethod {
         passedStates = new ArrayList<>();
         removedStates = new ArrayList<>();
     }
-    
-    public List<State> getWin()
-    {
+
+    public List<State> getWin() {
         return win;
     }
-
 
     @Override
     public boolean run(StateManager init) {
@@ -41,24 +39,26 @@ public class BreadthFirst extends SearchMethod {
         states.add(init.getStart());
         boolean goal = false;
         while (!goal) {
-            if(states.isEmpty() || halted)
+            if (states.isEmpty() || halted) {
                 return false;
-            State temp[] = init.GetNextStates(states.get(first));
-            String path = states.get(first).getPath();
-            removedStates.add(states.get(first));
-            init.addToClosedSet(states.remove(first));
-            for (int i = 0; i < temp.length; i++) {
-                if (!init.isInClosedSet(temp[i])) {
-                    states.add(temp[i]);
-                    temp[i].initPath(path);
-                    temp[i].appendPath(Integer.toString(i));
-                    init.addToClosedSet(temp[i]);
-                }
             }
             if (states.contains(init.getGoal())) {
                 goal = true;
+            } else {
+                State temp[] = init.GetNextStates(states.get(first));
+                String path = states.get(first).getPath();
+                removedStates.add(states.get(first));
+                init.addToClosedSet(states.remove(first));
+                for (int i = 0; i < temp.length; i++) {
+                    if (!init.isInClosedSet(temp[i])) {
+                        states.add(temp[i]);
+                        temp[i].initPath(path);
+                        temp[i].appendPath(Integer.toString(i));
+                        init.addToClosedSet(temp[i]);
+                    }
+                }
+                stepsIn++;
             }
-            stepsIn++;
 
         }
         int index = states.indexOf(init.getGoal());
@@ -72,19 +72,16 @@ public class BreadthFirst extends SearchMethod {
         System.out.println("Success after: " + stepsIn);
         win.printCurrentState();
     }
-    
-    public int getSteps()
-    {
+
+    public int getSteps() {
         return stepsIn;
     }
-    
-    public int getDepth()
-    {
+
+    public int getDepth() {
         return depth;
     }
 
-    public void calculatePath(int index) 
-    {
+    public void calculatePath(int index) {
         win = new ArrayList<>();
         String winningPath = states.get(index).getPath();
         win.add(removedStates.get(first));
@@ -92,13 +89,10 @@ public class BreadthFirst extends SearchMethod {
         //System.out.println("Calculate win");
         //System.out.println("Win path: " + winningPath);
         //System.out.println("======================================");
-        while (endIndex <= winningPath.length()) 
-        {
-            for(int i = 0; i < removedStates.size(); i++)
-            {
-                if(removedStates.get(i).getPath().equals(
-                        winningPath.substring(0, endIndex)))
-                {
+        while (endIndex <= winningPath.length()) {
+            for (int i = 0; i < removedStates.size(); i++) {
+                if (removedStates.get(i).getPath().equals(
+                        winningPath.substring(0, endIndex))) {
                     win.add(removedStates.get(i));
                     depth++;
                     break;
@@ -116,6 +110,4 @@ public class BreadthFirst extends SearchMethod {
 
     }
 
-
-   
 }
