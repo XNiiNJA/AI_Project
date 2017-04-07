@@ -438,12 +438,15 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="Time">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TimeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="Steps">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Run Time (mS):"/>
+            <Property name="text" type="java.lang.String" value="Run Time (nS):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
