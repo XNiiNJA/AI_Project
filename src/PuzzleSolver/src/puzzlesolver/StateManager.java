@@ -27,6 +27,9 @@ public class StateManager {
 
     StateManager(State init) {
         start = init;
+        across = init.getWidth();
+        tall = init.getHeight();
+        movablePiece = across * tall;
     }
 
     public State getStart() {
@@ -37,10 +40,10 @@ public class StateManager {
         tall = length;
         across = width;
         
-        int start[][] = new int[tall][across];
-        for (int i = 0; i < tall; i++) {
-            for (int j = 0; j < across; j++) {
-                start[i][j] = across * i + j+1;
+        int start[][] = new int[width][length];
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                start[j][i] = width * i + j + 1;
             }
         }
         
@@ -55,14 +58,14 @@ public class StateManager {
     }
 
     public static State generateGoalState(int width, int length) {
-        int setGoal[][] = new int[width][length];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < length; j++) {
-                setGoal[i][j] = width * i + j;
+        int start[][] = new int[width][length];
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                start[j][i] = width * i + j + 1;
             }
         }
 
-        return new State(setGoal);
+        return new State(start);
     }
 
     public boolean FoundGoal(State curState) {
@@ -225,9 +228,12 @@ public class StateManager {
     }
 
     private State swapPoints(State state, Point a, Point b) {
-        int[][] newRaw = new int[across][tall];
-        for (int i = 0; i < across; i++) {
-            for (int j = 0; j < tall; j++) {
+       int width = state.getWidth();
+       int height = state.getHeight();
+       
+       int[][] newRaw = new int[state.getWidth()][state.getHeight()];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 newRaw[i][j] = state.getState()[i][j];
             }
         }
@@ -251,6 +257,11 @@ public class StateManager {
 
         return null;
 
+    }
+    
+    public int getMovablePiece()
+    {
+      return movablePiece;
     }
 
     //Needs: 

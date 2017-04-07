@@ -41,7 +41,7 @@ public class BreadthFirst extends SearchMethod {
         states.add(init.getStart());
         boolean goal = false;
         while (!goal) {
-            if(states.isEmpty())
+            if(states.isEmpty() || halted)
                 return false;
             State temp[] = init.GetNextStates(states.get(first));
             String path = states.get(first).getPath();
@@ -64,6 +64,7 @@ public class BreadthFirst extends SearchMethod {
         int index = states.indexOf(init.getGoal());
         //display(states.get(index));
         calculatePath(index);
+        System.out.println("Done searching.");
         return true;
     }
 
@@ -114,4 +115,7 @@ public class BreadthFirst extends SearchMethod {
         //System.out.println("End Algorithm");
 
     }
+
+
+   
 }

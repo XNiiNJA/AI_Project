@@ -28,18 +28,18 @@ public class State
     private int pWidth;
     private String path;
     
-    State (int iHeight, int iWidth)
+    State (int iWidth, int iHeight)
     {
         pHeight = iHeight;
         pWidth = iWidth;
-        curState = new int[pHeight][pWidth];
+        curState = new int[pWidth][pHeight];
         Shuffler();
     }
     State(int newState[][])
     {
         curState = newState;
-        //pHeight = newState.length;
-        //pWidth = newState[0].length;
+        pWidth = newState.length;
+        pHeight = newState[0].length;
     }
     
     public int[][] getState()
@@ -111,6 +111,16 @@ public class State
    public float getHScore() {
       return hScore;
    }
+   
+   public int getWidth()
+   {
+      return pWidth;
+   }
+   
+   public int getHeight()
+   {
+      return pHeight;
+   }
 
    @Override
    public int hashCode() {
@@ -145,9 +155,9 @@ public class State
    // Tod - made a simple print state method. Haven't tested it, but it should come in handy when we need to debug, can
    // make more pretty later
    public void printCurrentState() {
-      for (int i = 0; i < curState.length; i++) {
-         for (int j = 0; j < curState[i].length; j++) {            
-            System.out.print(curState[i][j]);
+      for (int i = 0; i < pHeight; i++) {
+         for (int j = 0; j < pWidth; j++) {            
+            System.out.print(curState[j][i]);
             System.out.print("\t");
          }
          System.out.print("\n");
@@ -262,6 +272,8 @@ public class State
 
       System.out.print("Shuffled with heuristic: ");
       System.out.println(st.getHeuristic(current));
+      
+      current.printCurrentState();
       
       curState = current.getState();
 

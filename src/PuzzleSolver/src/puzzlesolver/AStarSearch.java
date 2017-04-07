@@ -5,7 +5,9 @@
  */
 package puzzlesolver;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,6 +17,9 @@ import java.util.Set;
 public class AStarSearch extends SearchMethod{
    
    StateManager st;
+   int depth = 0;
+   int stepsIn = 0;
+   private List<State> win;
    
    AStarSearch()
    {
@@ -44,6 +49,9 @@ public class AStarSearch extends SearchMethod{
       //First, generate a goal state to run on.
       st.goalState(3, 3);*/
       
+      stepsIn = 0;
+      depth = 0;
+      
       State start = st.getStart();
       
       //Set the G score of the start to 0.
@@ -56,21 +64,26 @@ public class AStarSearch extends SearchMethod{
       
       State current = null;
       
-      while(!st.openSetEmpty()) //Do this forever and ever.
+      while(!st.openSetEmpty() && !halted) //Do this forever and ever.
       {
          current = st.findLowestF();
          
-         if(st.getGoal().Compare(current))
+         if(st.getGoal().equals(current))
          {
             System.out.println("Found!");
             display(current);
+            calculatePath(current);
             return true;
          }
          
          st.removeFromOpenSet(current);
          st.addToClosedSet(current);
          
+         System.out.println();
+         
          State[] nextStates = st.GetNextStates(current);
+         
+         stepsIn++;
          
          for(int i = 0; i < nextStates.length; i++)
          {
@@ -113,14 +126,41 @@ public class AStarSearch extends SearchMethod{
             
          }
           
-          
       }
       
       System.out.println("Failure!");
-      display(current);
+      //display(current);
       
       return false;
    }
+   
+   private void calculatePath(State state)
+   {
+      
+      List<State> backwardsWin = new ArrayList();
+      win = new ArrayList();
+      
+      State endState = state;
+      
+      while(state != null)
+      {
+         depth++;
+         
+         backwardsWin.add(state);
+         
+         state = state.getPrevious();
+         
+      }
+      
+
+      for(int i = depth; i > 0; i--)
+      {
+         win.add(backwardsWin.get(i - 1));
+      }
+      
+      
+   }
+   
    
 /*   private State getNextBest(State state)
    {
@@ -164,12 +204,27 @@ public class AStarSearch extends SearchMethod{
       
       StateManager st = new StateManager(start);
               
-      st.goalState(2, 3);
+      st.goalState(start.getWidth(), start.getHeight());
       
       new AStarSearch().run(st);
       
       
       
    }
-   
+
+   @Override
+   public List<State> getWin() {
+      return win;
+   }
+
+   @Override
+   public int getSteps() {
+      return stepsIn;
+   }
+
+   @Override
+   public int getDepth() {
+      return depth;
+   }
+ 
 }
