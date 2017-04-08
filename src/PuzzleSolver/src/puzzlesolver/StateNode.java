@@ -8,6 +8,9 @@ package puzzlesolver;
 /**
  *  AI project
  * @author Jonesto
+ * State node does much of the work of beam search
+ * it keeps track of connecting nodes and checks the 
+ * heuristic to send back the best two possible matches
  */
 public class StateNode {
     private State curState;
