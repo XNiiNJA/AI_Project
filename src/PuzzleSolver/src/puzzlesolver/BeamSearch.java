@@ -9,8 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 //import java.util.Arrays;
 /**
- *
+ * 
  * @author jonesto
+ * Beam Search is designed to solve a puzzle by looking through two branches at once
+ * and use a heuristic based on each pieces distance from original spot and how many
+ * times a node have been visited 
  */
 public class BeamSearch extends SearchMethod
 {
