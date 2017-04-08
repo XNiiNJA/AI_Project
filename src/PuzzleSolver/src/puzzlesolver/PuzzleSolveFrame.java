@@ -455,7 +455,16 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_FActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        generateManualState();
+        try
+        {
+            clearPuzzle();            
+           generateManualState(); 
+        }
+        catch(Exception e)
+        {
+            G.drawString("Bad Input", 0, MainPannel.getHeight() - 20);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BActionPerformed
@@ -489,7 +498,7 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
             }
         }
         clearPuzzle();
-        G.drawString("Working...", 0, MainPannel.getHeight());
+        G.drawString("Working...", 0, MainPannel.getHeight()- 20);
 
         manager = new StateManager(curStartState);
         manager.goalState(3, 3);
@@ -498,20 +507,26 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
                 new Runnable() {
             @Override
             public void run() {
-                if (method != null) {
+                if (method != null) 
+                {
                     long startTime = System.nanoTime();
-                    if (checkSolvable()) {
+                    if (checkSolvable()) 
+                    {
                         method.run(manager);
                         runTime = System.nanoTime() - startTime;
-                    } else {
+                    } 
+                    else 
+                    {
                         clearPuzzle();
                         searchFailed();
                         solveThread = null;
                         return;
                     }
-                    if (method.isHalted()) {
+                    if (method.isHalted()) 
+                    {
                         Thread.currentThread().interrupt();
-                    } else {
+                    } else 
+                    {
                         winPath = method.getWin();
                         intSteps = method.getSteps();
                         //intDepth = method.getDepth();
@@ -526,12 +541,10 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
     }
 
     private void searchFailed() {
-        G.drawString("Unsolvable", 0, MainPannel.getHeight());
+        G.drawString("Unsolvable", 0, MainPannel.getHeight()- 20);
     }
 
     private void loadPuzzle() {
-       
-
         G.clearRect(0, 0, 500, 500);
         Steps.setText(Integer.toString(intSteps));
         
@@ -552,7 +565,6 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
         } else {
             drawState(curStartState);
         }
-
     }
 
     private boolean checkSolvable() {
@@ -579,10 +591,11 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
 
     private void insertNumbers() {
         G.setFont(new Font("Ariel", Font.BOLD, 36));
-        G.drawString(A.getText(), 80, 100);
+        winPath = null;
+        G.drawString(A.getText(), 80, 100) ;
         G.drawString(B.getText(), 130, 100);
         G.drawString(C.getText(), 180, 100);
-        G.drawString(D.getText(), 80, 150);
+        G.drawString(D.getText(), 80, 150) ;
         G.drawString(E.getText(), 130, 150);
         G.drawString(F.getText(), 180, 150);
         G.drawString(GB.getText(), 80, 200);
@@ -600,26 +613,26 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
     }
 
     public State generateState() {
+        winPath = null;
         curStartState = new State(3, 3);
-
         return curStartState;
     }
 
     public void generateManualState() {
         int start[][] = new int[3][3];
-        //=================
+        //============================================
         start[0][0] = Integer.parseInt(A.getText());
         start[0][1] = Integer.parseInt(B.getText());
         start[0][2] = Integer.parseInt(C.getText());
-        //=================
+        //============================================
         start[1][0] = Integer.parseInt(D.getText());
         start[1][1] = Integer.parseInt(E.getText());
         start[1][2] = Integer.parseInt(F.getText());
-        //=================
+        //============================================
         start[2][0] = Integer.parseInt(GB.getText());
         start[2][1] = Integer.parseInt(H.getText());
         start[2][2] = Integer.parseInt(I.getText());
-        //=================
+        //============================================
         curStartState = new State(start);
 
         drawState(curStartState);
@@ -661,7 +674,6 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
 
         @Override
         public void run() {
-
             for (;;) {
                 if (loadReady) {
                     loadReady = false;
@@ -673,11 +685,8 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
                     });
                 }
                 Thread.yield();
-
             }
-
         }
-
     }
 
     /**
