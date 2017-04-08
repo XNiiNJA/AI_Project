@@ -29,7 +29,7 @@ public class StateNode {
     private int columns;
     private State goal;
      
-    
+ // constructor takes current state of puzzle   
     public StateNode(State puzzlePos)                  
     {
        curState = puzzlePos;
@@ -45,6 +45,9 @@ public class StateNode {
        entropy = getPermHeuristic(puzzlePos);
     }
    
+    //this is called when you travel down the branch
+    //generates all next possibilities and links to them by
+    //four nodes
    public void DescendTree(StateNode userNode)
    {
        
@@ -158,11 +161,12 @@ public class StateNode {
            }
        }
    }
+    //returns amount of shuffling of state, needed to evaluate potential path
    public int GetEntropy()
    {
        return entropy;
    }
-
+//returns current puzzle state
    public State GetCurState()
    {
        return curState;
@@ -170,15 +174,14 @@ public class StateNode {
    //add number of times node was visited
    public void SetVisited(int vnum)
    {
-       //System.out.print("final test, wtf \n");
        visited += vnum;
    }
-   
+   //return number of times node was visited
    public int GetVisits()
    {
        return visited;
    }
-   
+   //checks all ancestors to see if visited before
    public StateNode GetRoot(State compState)
    {
        if (compState.equals(curState))
@@ -190,7 +193,7 @@ public class StateNode {
        return null;
    }
    
-   
+   //returns the two best nodes based on shuffled state and number of visits
    public StateNode [] GetNextNodes ()
    {
        int minEntropy, minVisited, dirBest, dirNext;
@@ -266,6 +269,8 @@ public class StateNode {
        StateNode returnStates [] = {nextMove[dirBest], nextMove[dirNext]};
        return returnStates;
    }
+    
+    // calculates shuffled state discretely, returns -1 if unsolvable
    public int getPermHeuristic(State state) 
    {
 
@@ -298,7 +303,9 @@ public class StateNode {
                 return -1;
             return distance;
     }
-   
+    
+    //finds point for calculating distance for heuristic
+    //taken from StateManager
     public Point findPoint(int x, State state) {
 
         for (int i = 0; i < state.getState().length; i++) {
@@ -311,6 +318,8 @@ public class StateNode {
         }
         return null;
     } 
+    
+    //sets goal state
     public void SetGoalState()
     {
         int setGoal[][] = new int[rows][columns];
@@ -321,7 +330,7 @@ public class StateNode {
             }
         goal = new State(setGoal);
     } 
-    
+    //copy array method
     public int[][] CopyArray(int[][] userArr)
     {
         int [][] copyArr =  new int[userArr.length][userArr[0].length];
@@ -330,7 +339,7 @@ public class StateNode {
                 copyArr[i][j] = userArr[i][j];
         return copyArr;
     }
-    
+    //returns linking nodes based on direction asked for
     StateNode GetChild(int dir)
     {
         
@@ -342,7 +351,7 @@ public class StateNode {
             return this;
         
     }
-    
+    //checks to see if matches children nodes, adds to state
     void SetChild(int visits, State lState)
     {
         
@@ -355,7 +364,7 @@ public class StateNode {
         if (nextMove[west] != null && lState.equals(nextMove[west].GetCurState()))
             nextMove[west].SetVisited(visits);
     }
-    
+    //overriden equals method
     @Override
    public boolean equals(Object o) 
    {
