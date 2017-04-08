@@ -67,21 +67,7 @@ public class PuzzleSolver {
                     continue;
                 }
 
-                /*
-                switch (input) {
-                    case "Breadth":
-                        breadth.run(manage);
-                        break;
-                    case "A*":
-                        
-                        //your function call here
-                        break;
-                    case "Beam":
-                        //your function call
-                        break;
-                    default:
-                        System.out.println("Not an option.");
-                }*/
+
             } catch (IOException ex) {
 
             }

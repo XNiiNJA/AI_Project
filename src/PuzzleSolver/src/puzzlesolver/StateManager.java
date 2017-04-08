@@ -121,27 +121,19 @@ public class StateManager {
 
         boolean result = closedSet.add(state);
 
-        if (closedSet.size() % 10000 == 0) {
-            //System.out.println("ratio: " + (float) openSet.size() / closedSet.size());
-        }
         return result;
 
-        ///return closedSet.add(state);
     }
 
     public boolean addToOpenSet(State state) {
         boolean result = openSet.add(state);
-        if (openSet.size() % 1000 == 0) {
-            //     System.out.println("in open set: " + openSet.size());
-        }
+        
         return result;
     }
 
     public boolean removeFromOpenSet(State state) {
         boolean result = openSet.remove(state);
-        if (openSet.size() % 1000 == 0) {
-            //   System.out.println("in open set: " + openSet.size());
-        }
+        
         return result;
 
     }

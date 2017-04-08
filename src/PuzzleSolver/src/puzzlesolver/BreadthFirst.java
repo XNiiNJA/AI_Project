@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package puzzlesolver;
 
 import java.util.*;
@@ -62,7 +57,7 @@ public class BreadthFirst extends SearchMethod {
 
         }
         int index = states.indexOf(init.getGoal());
-        //display(states.get(index));
+        
         calculatePath(index);
         System.out.println("Done searching.");
         return true;
@@ -86,9 +81,7 @@ public class BreadthFirst extends SearchMethod {
         String winningPath = states.get(index).getPath();
         win.add(removedStates.get(first));
         int endIndex = 3;
-        //System.out.println("Calculate win");
-        //System.out.println("Win path: " + winningPath);
-        //System.out.println("======================================");
+        
         while (endIndex <= winningPath.length()) {
             for (int i = 0; i < removedStates.size(); i++) {
                 if (removedStates.get(i).getPath().equals(
@@ -101,12 +94,6 @@ public class BreadthFirst extends SearchMethod {
             endIndex += 2;
         }
         win.add(states.get(index));
-        //System.out.println("Path found:");
-        //for(int i = 0; i < win.size(); i++)
-        //{
-        //    System.out.println(win.get(i).getPath());
-        //}
-        //System.out.println("End Algorithm");
 
     }
 

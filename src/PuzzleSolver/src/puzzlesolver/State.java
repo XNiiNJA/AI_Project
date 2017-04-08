@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package puzzlesolver;
 
 import java.util.Arrays;
@@ -166,47 +161,7 @@ public class State
 
    public void Shuffler() {
 
-      /* int NORTH = 0;
-        int EAST = 1;
-        int WEST = 2;
-        int SOUTH = 3;
-        int randir;
-        int shufflenum = 1000;
-        for (int i = 0; i < pHeight; i++)
-            for (int j = 0; j < pWidth; j++)
-                curState[i][j] = (i * pWidth) + j + 1;
-        curState[pHeight-1][pWidth-1]=0;
-        int posx = pWidth - 1;
-        int posy = pHeight - 1;
-        for (int i = 0; i < shufflenum; i++)
-        {
-            randir = (int)(Math.random() * 4);
-            if(randir == NORTH && posy > 0)
-            {
-                curState[posy][posx] = curState[posy-1][posx];
-                curState[posy-1][posx]=0;
-                posy--;
-            }
-            else if(randir == EAST && posx < (pWidth-1))
-            {
-                curState[posy][posx] = curState[posy][posx+1];
-                curState[posy][posx+1]=0;
-                posx++;
-            }
-            else if(randir == WEST && posx > 0)
-            {
-                curState[posy][posx] = curState[posy][posx-1];
-                curState[posy][posx-1] = 0;
-                posx--;
-            }
-            else if(randir == SOUTH && posy < (pHeight-1))
-            {
-                curState[posy][posx] = curState[posy+1][posx];
-                curState[posy+1][posx]=0;
-                posy++;
-            }
-        }*/
-
+    
       State current = StateManager.generateGoalState(pWidth, pHeight);
 
       boolean doRand = false;
@@ -263,10 +218,6 @@ public class State
          }
          
          current = next[ourIndex];
-         
-         //current.printCurrentState();
-         //System.out.print("\n\n\n");
-         //System.out.println(ourIndex);
 
       }
 
