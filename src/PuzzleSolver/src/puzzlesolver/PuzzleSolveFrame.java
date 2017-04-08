@@ -545,10 +545,11 @@ public class PuzzleSolveFrame extends javax.swing.JFrame {
     }
 
     private void loadPuzzle() {
-        G.clearRect(0, 0, 500, 500);
+        G.clearRect(0, 0, MainPannel.getWidth(), MainPannel.getHeight());
         Steps.setText(Integer.toString(intSteps));
         
-        depth.setText(Integer.toString(winPath.size() - 1));
+        if(winPath != null)
+           depth.setText(Integer.toString(winPath.size() - 1));
         Time.setText(Long.toString(runTime));
         generatePuzzle();
     }
